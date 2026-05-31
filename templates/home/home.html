@@ -1,0 +1,1753 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elizade Motors | Premium Cars in Lagos</title>
+<meta name="description" content="Elizade Motors — Nigeria's trusted premium car dealer. New & pre-owned vehicles, best prices, nationwide delivery.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --ink:#08090a;--ink2:#111214;--ink3:#1a1b1e;
+  --red:#d92b2b;--red2:#b82020;--red-glow:rgba(217,43,43,0.18);
+  --gold:#e8a020;
+  --white:#f5f3ef;--off:#c8c5be;--mute:#5c5a56;
+  --border:rgba(217,43,43,0.13);--border2:rgba(255,255,255,0.07);
+  --shadow:0 24px 64px rgba(0,0,0,0.55);
+  --r:6px;--r2:12px;
+  --font-head:'Bebas Neue',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'DM Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--white);font-family:var(--font-body);font-weight:300;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font-family:var(--font-body)}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
+
+/* ============================================================
+   TICKER
+   ============================================================ */
+.ticker{background:var(--red);height:36px;overflow:hidden;display:flex;align-items:center}
+.ticker-wrap{display:flex;animation:tick 32s linear infinite;white-space:nowrap}
+.ticker-wrap:hover{animation-play-state:paused}
+.ticker-item{font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:0 3rem;color:#fff;opacity:.9}
+.ticker-dot{color:rgba(255,255,255,.4);margin:0 .5rem}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+nav{position:fixed;top:36px;left:0;right:0;z-index:200;padding:0 5%;height:66px;display:flex;align-items:center;justify-content:space-between;transition:all .4s}
+nav.stuck{background:rgba(8,9,10,.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);top:0}
+.nav-logo{display:flex;align-items:center;gap:14px}
+.logo-badge{width:44px;height:44px;background:var(--red);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:26px;color:#fff;letter-spacing:1px;flex-shrink:0}
+.logo-copy h1{font-family:var(--font-head);font-size:22px;letter-spacing:4px;text-transform:uppercase;line-height:1;color:var(--white)}
+.logo-copy p{font-family:var(--font-mono);font-size:9px;letter-spacing:4px;color:var(--red);text-transform:uppercase;margin-top:2px}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(245,243,239,.45);transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--red);transition:width .3s}
+.nav-links a:hover{color:var(--white)}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-admin-btn{display:flex;align-items:center;gap:7px;background:rgba(217,43,43,.08);border:1px solid var(--border);color:var(--red);font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:9px 16px;border-radius:var(--r);cursor:pointer;transition:all .2s}
+.nav-admin-btn:hover{background:rgba(217,43,43,.18)}
+.nav-wa{display:flex;align-items:center;gap:8px;background:var(--red);color:#fff;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:10px 20px;border-radius:var(--r);transition:all .2s}
+.nav-wa:hover{background:var(--red2);transform:translateY(-1px)}
+.hamburger{display:none;background:none;border:1px solid var(--border2);color:var(--white);width:40px;height:40px;border-radius:var(--r);cursor:pointer;font-size:15px;align-items:center;justify-content:center}
+.mob-menu{display:none;position:fixed;inset:0;background:rgba(8,9,10,.98);z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mob-menu.open{display:flex}
+.mob-menu a{font-family:var(--font-head);font-size:56px;letter-spacing:4px;text-transform:uppercase;color:var(--white);transition:color .2s}
+.mob-menu a:hover{color:var(--red)}
+.mob-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--mute);font-size:26px;cursor:pointer}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:102px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(120deg,rgba(8,9,10,.98) 0%,rgba(11,12,14,.88) 45%,rgba(8,9,10,.72) 100%),url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1800&q=80') center/cover no-repeat}
+.hero-noise{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")}
+.hero-grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(217,43,43,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(217,43,43,.04) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 70% at 60% 50%,black,transparent)}
+.hero-inner{position:relative;z-index:2;max-width:1320px;margin:0 auto;padding:0 5%;width:100%;display:grid;grid-template-columns:1fr 340px;gap:4rem;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(217,43,43,.08);border:1px solid var(--border);padding:8px 18px;border-radius:2px;font-family:var(--font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:2rem}
+.pulse-dot{width:7px;height:7px;background:var(--red);border-radius:50%;animation:pulse-anim 1.4s ease-in-out infinite}
+@keyframes pulse-anim{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+.hero-title{font-family:var(--font-head);font-size:clamp(82px,11vw,158px);line-height:.86;letter-spacing:-1px;text-transform:uppercase;margin-bottom:1.75rem}
+.hero-title .hl{color:var(--red)}
+.hero-title .ol{-webkit-text-stroke:2px var(--white);color:transparent}
+.hero-title .ol-r{-webkit-text-stroke:2px var(--red);color:transparent}
+.hero-sub{font-size:15px;line-height:1.9;color:rgba(245,243,239,.48);max-width:460px;margin-bottom:2.5rem}
+.hero-cta-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem}
+.cta-primary{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:16px 32px;border-radius:var(--r);border:none;cursor:pointer;transition:all .25s}
+.cta-primary:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 12px 32px rgba(217,43,43,.35)}
+.cta-ghost{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(245,243,239,.2);color:var(--white);font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:16px 32px;border-radius:var(--r);transition:all .25s}
+.cta-ghost:hover{border-color:var(--red);color:var(--red)}
+.hero-trust{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.trust-chip{display:flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10px;letter-spacing:1px;color:var(--mute);text-transform:uppercase}
+.trust-chip i{color:var(--red);font-size:12px}
+/* hero panel */
+.hero-panel{background:rgba(17,18,20,.88);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;backdrop-filter:blur(16px)}
+.hp-top{background:linear-gradient(135deg,rgba(217,43,43,.1),rgba(217,43,43,.02));padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.hp-title{font-family:var(--font-head);font-size:18px;letter-spacing:3px;text-transform:uppercase;color:var(--red)}
+.hp-live{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--mute);text-transform:uppercase}
+.hp-rows{padding:18px}
+.hp-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(217,43,43,.07)}
+.hp-row:last-child{border:none}
+.hp-lbl{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mute)}
+.hp-val{font-family:var(--font-head);font-size:24px;letter-spacing:1px;color:var(--red)}
+.hp-foot{background:var(--red);padding:14px 22px;display:flex;justify-content:space-between;align-items:center}
+.hp-foot span{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.9)}
+.hp-bars{display:flex;gap:3px;align-items:center}
+.hp-bar{width:4px;background:rgba(255,255,255,.6);border-radius:2px;animation:bar-dance .9s ease-in-out infinite}
+.hp-bar:nth-child(1){height:6px;animation-delay:0s}
+.hp-bar:nth-child(2){height:14px;animation-delay:.1s}
+.hp-bar:nth-child(3){height:20px;animation-delay:.2s}
+.hp-bar:nth-child(4){height:10px;animation-delay:.15s}
+.hp-bar:nth-child(5){height:16px;animation-delay:.05s}
+@keyframes bar-dance{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ============================================================
+   STATS BAR
+   ============================================================ */
+.stats-bar{background:var(--ink2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);padding:0 5%}
+.stat-block{padding:2.5rem 2rem;border-right:1px solid var(--border2);transition:background .3s;position:relative;overflow:hidden}
+.stat-block:last-child{border:none}
+.stat-block:hover{background:rgba(217,43,43,.03)}
+.stat-num{font-family:var(--font-head);font-size:54px;color:var(--red);line-height:1;letter-spacing:-1px}
+.stat-lbl{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:6px}
+
+/* ============================================================
+   SECTION HELPERS
+   ============================================================ */
+.sec-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:1rem}
+.sec-eyebrow::before{content:'';width:28px;height:1px;background:var(--red)}
+.sec-heading{font-family:var(--font-head);font-size:clamp(48px,6vw,80px);text-transform:uppercase;line-height:.9;letter-spacing:-1px}
+.sec-heading .hl{color:var(--red)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ============================================================
+   BRANDS
+   ============================================================ */
+.brands-section{padding:3.5rem 5%;background:var(--ink);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)}
+.brands-inner{max-width:1320px;margin:0 auto}
+.brands-lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--mute);text-align:center;margin-bottom:2rem}
+.brands-row{display:flex;gap:2.5rem;align-items:center;flex-wrap:wrap;justify-content:center}
+.brand-tag{font-family:var(--font-head);font-size:20px;letter-spacing:3px;text-transform:uppercase;color:rgba(245,243,239,.13);transition:color .3s;cursor:default}
+.brand-tag:hover{color:var(--red)}
+
+/* ============================================================
+   INVENTORY
+   ============================================================ */
+.inv-section{padding:6rem 5%;background:var(--ink2)}
+.inv-inner{max-width:1320px;margin:0 auto}
+.inv-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3.5rem;gap:2rem;flex-wrap:wrap}
+.filter-strip{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:3rem}
+.flt-btn{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:9px 20px;border:1px solid var(--border2);border-radius:2px;background:none;color:var(--mute);cursor:pointer;transition:all .2s}
+.flt-btn:hover,.flt-btn.on{background:var(--red);color:#fff;border-color:var(--red)}
+.cars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+/* car card */
+.car-card{background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;display:flex;flex-direction:column;transition:all .32s;position:relative}
+.car-card:hover{transform:translateY(-7px);border-color:rgba(217,43,43,.3);box-shadow:var(--shadow)}
+.car-img{position:relative;height:218px;overflow:hidden;background:var(--ink2)}
+.car-img img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
+.car-card:hover .car-img img{transform:scale(1.07)}
+.car-no-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:44px;opacity:.3}
+.car-lbl{position:absolute;top:12px;left:12px;font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:5px 10px;border-radius:2px}
+.lbl-new{background:var(--red);color:#fff}
+.lbl-hot{background:#c92020;color:#fff}
+.lbl-deal{background:#15803d;color:#fff}
+.car-quick-wa{position:absolute;top:12px;right:12px;background:#25D366;color:#fff;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:0;transform:scale(.7);transition:all .22s}
+.car-card:hover .car-quick-wa{opacity:1;transform:scale(1)}
+.car-body{padding:1.4rem;flex:1;display:flex;flex-direction:column}
+.car-make{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.car-name{font-family:var(--font-head);font-size:26px;letter-spacing:1px;text-transform:uppercase;line-height:1.05;margin-bottom:8px}
+.car-meta{display:flex;gap:.85rem;font-size:11px;color:var(--mute);margin-bottom:1rem;flex-wrap:wrap}
+.car-meta i{color:var(--red);font-size:9px;margin-right:3px}
+.car-price-row{display:flex;align-items:baseline;gap:.5rem;margin-bottom:1.1rem}
+.car-price{font-family:var(--font-head);font-size:30px;letter-spacing:-1px;color:var(--red)}
+.car-price-note{font-size:12px;color:var(--mute)}
+.car-btns{display:flex;gap:.65rem;margin-top:auto}
+.car-btn-cta{flex:1;background:var(--red);color:#fff;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:12px;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.car-btn-cta:hover{background:var(--red2)}
+.car-btn-wa{background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.25);color:#25D366;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:12px 14px;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
+.car-btn-wa:hover{background:#25D366;color:#fff;border-color:#25D366}
+.car-card.feat{grid-column:span 2}
+.car-card.feat .car-img{height:290px}
+.car-card.feat .car-name{font-size:36px}
+.car-card.feat .car-price{font-size:40px}
+.grid-empty{grid-column:1/-1;text-align:center;padding:5rem 2rem;color:var(--mute)}
+.grid-empty i{font-size:52px;display:block;margin-bottom:1.25rem;opacity:.25}
+.grid-empty p{font-size:14px;margin-bottom:1.5rem}
+
+/* ============================================================
+   WHY US
+   ============================================================ */
+.whyus-section{padding:6rem 5%;background:var(--ink);border-top:1px solid var(--border2)}
+.whyus-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.whyus-text p{font-size:15px;line-height:1.9;color:rgba(245,243,239,.48);margin-bottom:2.5rem}
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.feat-card{border:1px solid var(--border2);border-radius:var(--r);padding:1.4rem;background:var(--ink2);transition:all .3s;position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.feat-card:hover{border-color:rgba(217,43,43,.25);transform:translateY(-3px)}
+.feat-card:hover::before{transform:scaleX(1)}
+.feat-icon{font-size:26px;margin-bottom:10px}
+.feat-card h4{font-family:var(--font-head);font-size:18px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.feat-card p{font-size:12px;color:var(--mute);line-height:1.7}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border2);border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden}
+.metric-cell{background:var(--ink2);padding:2.25rem 1.75rem;transition:background .3s}
+.metric-cell:hover{background:rgba(217,43,43,.04)}
+.metric-num{font-family:var(--font-head);font-size:52px;color:var(--red);line-height:1;letter-spacing:-1px}
+.metric-lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:6px}
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.testi-section{padding:6rem 5%;background:var(--ink2);border-top:1px solid var(--border2)}
+.testi-inner{max-width:1320px;margin:0 auto}
+.testi-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3.5rem;flex-wrap:wrap;gap:1.5rem}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.testi-card{background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r2);padding:2.25rem;display:flex;flex-direction:column;transition:all .3s}
+.testi-card:hover{border-color:rgba(217,43,43,.25);transform:translateY(-4px)}
+.testi-stars{display:flex;gap:3px;margin-bottom:1.25rem}
+.testi-stars i{color:var(--gold);font-size:13px}
+.testi-quote{font-size:14px;line-height:1.85;color:rgba(245,243,239,.68);flex:1;margin-bottom:1.75rem;position:relative;padding-left:1.5rem}
+.testi-quote::before{content:'\201C';position:absolute;left:0;top:-8px;font-family:var(--font-head);font-size:52px;color:var(--red);opacity:.25;line-height:1}
+.testi-author{display:flex;align-items:center;gap:12px;padding-top:1.5rem;border-top:1px solid var(--border2)}
+.testi-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--red2));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:20px;color:#fff;flex-shrink:0}
+.testi-name{font-size:13px;font-weight:500;color:var(--white)}
+.testi-loc{font-family:var(--font-mono);font-size:10px;color:var(--mute);margin-top:2px;letter-spacing:.5px}
+/* add testimonial CTA */
+.testi-add-card{background:rgba(217,43,43,.04);border:1px dashed rgba(217,43,43,.2);border-radius:var(--r2);padding:2.25rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1rem;cursor:pointer;transition:all .3s;min-height:200px}
+.testi-add-card:hover{background:rgba(217,43,43,.08);border-color:rgba(217,43,43,.35)}
+.testi-add-card i{font-size:28px;color:var(--red);opacity:.5}
+.testi-add-card p{font-size:13px;color:var(--mute)}
+
+/* ============================================================
+   ENQUIRY SECTION
+   ============================================================ */
+.enquiry-section{padding:6rem 5%;background:var(--ink);border-top:1px solid var(--border2)}
+.enquiry-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr 1.3fr;gap:5rem;align-items:start}
+.enquiry-left p{font-size:15px;line-height:1.9;color:rgba(245,243,239,.48);margin-bottom:2.5rem}
+.contact-list{display:flex;flex-direction:column;gap:1.1rem;margin-bottom:2.5rem}
+.contact-row{display:flex;align-items:center;gap:14px;color:var(--white);transition:color .2s}
+.contact-row:hover{color:var(--red)}
+.c-ico{width:42px;height:42px;border:1px solid var(--border2);border-radius:var(--r);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:15px;flex-shrink:0;transition:all .2s}
+.contact-row:hover .c-ico{background:rgba(217,43,43,.1);border-color:var(--border)}
+.c-lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.c-val{font-size:13px;font-weight:500}
+.wa-cta-big{display:flex;align-items:center;justify-content:center;gap:12px;background:#25D366;color:#fff;font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:17px 32px;border-radius:var(--r);transition:all .2s;width:100%}
+.wa-cta-big:hover{background:#1ebe5c;transform:translateY(-2px);box-shadow:0 12px 28px rgba(37,211,102,.3)}
+.wa-cta-big i{font-size:20px}
+/* enquiry form */
+.enquiry-form-box{background:var(--ink2);border:1px solid var(--border2);border-radius:var(--r2);padding:2.75rem}
+.form-title{font-family:var(--font-head);font-size:28px;letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem}
+.form-sub{font-size:13px;color:var(--mute);margin-bottom:2rem;line-height:1.6}
+.f-grp{margin-bottom:1.1rem}
+.f-lbl{display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:7px}
+.f-inp{width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:13px 15px;font-family:var(--font-body);font-size:13px;color:var(--white);outline:none;transition:border-color .2s}
+.f-inp:focus{border-color:var(--red);background:rgba(217,43,43,.03)}
+.f-inp::placeholder{color:rgba(245,243,239,.18)}
+.f-inp option{background:#1a1b1e}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.f-err{font-family:var(--font-mono);font-size:10px;color:#e63030;margin-top:4px;display:none;letter-spacing:.5px}
+.form-submit{width:100%;background:var(--red);color:#fff;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;border:none;padding:17px;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:1.5rem}
+.form-submit:hover{background:var(--red2);transform:translateY(-1px)}
+.form-success{display:none;text-align:center;padding:2rem}
+.form-success-icon{width:64px;height:64px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 1.25rem}
+.form-success h4{font-family:var(--font-head);font-size:22px;letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem}
+.form-success p{font-size:13px;color:var(--mute);line-height:1.7}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{background:var(--ink);border-top:1px solid var(--border2);padding:4.5rem 5% 2rem}
+.foot-grid{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3.5rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border2)}
+.foot-brand p{font-size:13px;color:var(--mute);line-height:1.8;margin:1rem 0 1.5rem;max-width:260px}
+.foot-socials{display:flex;gap:8px}
+.soc{width:34px;height:34px;border:1px solid var(--border2);border-radius:var(--r);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:13px;transition:all .2s}
+.soc:hover{background:rgba(217,43,43,.1);color:var(--red);border-color:var(--border)}
+.foot-col h4{font-family:var(--font-head);font-size:15px;letter-spacing:3px;text-transform:uppercase;margin-bottom:1.25rem}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.foot-links a{font-size:13px;color:var(--mute);transition:color .2s}
+.foot-links a:hover{color:var(--red)}
+.foot-bottom{max-width:1320px;margin:2rem auto 0;display:flex;align-items:center;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:rgba(92,90,86,.4);flex-wrap:wrap;gap:1rem;letter-spacing:.5px}
+
+/* ============================================================
+   FLOATING ELEMENTS
+   ============================================================ */
+.wa-float{position:fixed;bottom:2.5rem;right:2.5rem;z-index:89;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;box-shadow:0 8px 28px rgba(37,211,102,.4);transition:all .2s}
+.wa-float:hover{transform:scale(1.1)}
+.wa-float::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(37,211,102,.25);animation:wa-ring 2s ease-out infinite}
+@keyframes wa-ring{0%{transform:scale(1);opacity:1}100%{transform:scale(1.55);opacity:0}}
+#btt{position:fixed;bottom:2.5rem;left:2.5rem;width:42px;height:42px;background:var(--ink3);border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--red);font-size:13px;cursor:pointer;opacity:0;pointer-events:none;transition:all .3s;z-index:88;box-shadow:var(--shadow)}
+#btt.show{opacity:1;pointer-events:all}
+#btt:hover{background:var(--red);color:#fff;border-color:var(--red)}
+#toast{position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%) translateY(14px);background:var(--ink3);border:1px solid var(--border2);color:var(--white);padding:11px 22px;border-radius:var(--r);font-family:var(--font-mono);font-size:11px;letter-spacing:.5px;opacity:0;pointer-events:none;transition:all .4s;z-index:9999;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ============================================================
+   INQUIRY MODAL (per car)
+   ============================================================ */
+.modal-overlay{position:fixed;inset:0;z-index:800;background:rgba(8,9,10,.93);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .35s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:var(--ink2);border:1px solid var(--border);border-radius:var(--r2);width:100%;max-width:640px;max-height:90vh;overflow-y:auto;transform:translateY(30px);transition:transform .35s}
+.modal-overlay.open .modal-box{transform:translateY(0)}
+.modal-box::-webkit-scrollbar{width:3px}
+.modal-head{background:linear-gradient(135deg,rgba(217,43,43,.1),rgba(217,43,43,.02));border-bottom:1px solid var(--border);padding:1.5rem 2rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;position:sticky;top:0;backdrop-filter:blur(12px)}
+.modal-car-make{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.modal-car-name{font-family:var(--font-head);font-size:24px;letter-spacing:1px;text-transform:uppercase;line-height:1.1}
+.modal-car-price{font-family:var(--font-head);font-size:20px;color:var(--red);margin-top:4px}
+.modal-close{background:none;border:1px solid var(--border2);color:var(--mute);width:36px;height:36px;border-radius:var(--r);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.modal-close:hover{background:var(--red);border-color:var(--red);color:#fff}
+.modal-prog{padding:.65rem 2rem;background:rgba(217,43,43,.04);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem}
+.prog-track{flex:1;height:2px;background:rgba(255,255,255,.06);border-radius:1px;overflow:hidden}
+.prog-fill{height:100%;background:var(--red);border-radius:1px;transition:width .4s ease}
+.prog-txt{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);white-space:nowrap;text-transform:uppercase}
+.modal-body{padding:1.75rem 2rem}
+.m-step{display:none}.m-step.active{display:block}
+.m-step-title{font-family:var(--font-head);font-size:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:.4rem}
+.m-step-sub{font-family:var(--font-mono);font-size:10px;letter-spacing:.5px;color:var(--mute);margin-bottom:1.75rem;line-height:1.5}
+.intent-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1.5rem}
+.intent-card{border:1px solid var(--border2);border-radius:var(--r);padding:1.1rem;cursor:pointer;transition:all .2s;text-align:center;background:rgba(255,255,255,.02)}
+.intent-card:hover{border-color:rgba(217,43,43,.35);background:rgba(217,43,43,.04)}
+.intent-card.sel{border-color:var(--red);background:rgba(217,43,43,.08)}
+.intent-icon{font-size:26px;margin-bottom:.65rem}
+.intent-card h4{font-family:var(--font-head);font-size:14px;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.intent-card p{font-size:11px;color:var(--mute);line-height:1.5}
+.tog-row{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.tog{padding:9px 18px;border:1px solid var(--border2);border-radius:2px;background:none;color:var(--mute);font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.tog.on{background:var(--red);color:#fff;border-color:var(--red)}
+.m-nav{display:flex;gap:.75rem;margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid var(--border2)}
+.m-back{background:none;border:1px solid var(--border2);color:var(--mute);font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:13px 22px;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px}
+.m-back:hover{border-color:var(--white);color:var(--white)}
+.m-next{flex:1;background:var(--red);color:#fff;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:14px;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.m-next:hover{background:var(--red2)}
+.m-next:disabled{opacity:.3;pointer-events:none}
+.mf-grp{margin-bottom:1.1rem}
+.mf-lbl{display:block;font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:7px}
+.mf-inp{width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:12px 14px;font-family:var(--font-body);font-size:13px;color:var(--white);outline:none;transition:border-color .2s}
+.mf-inp:focus{border-color:var(--red);background:rgba(217,43,43,.03)}
+.mf-inp::placeholder{color:rgba(245,243,239,.18)}
+.mf-inp option{background:#1a1b1e}
+.mf-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.mf-err{font-family:var(--font-mono);font-size:9px;color:#e63030;margin-top:4px;display:none;letter-spacing:.5px}
+.success-wrap{text-align:center;padding:1rem 0}
+.success-ico{width:72px;height:72px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 1.25rem}
+.success-wrap h3{font-family:var(--font-head);font-size:26px;letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem}
+.success-wrap p{font-size:13px;color:var(--mute);line-height:1.8;max-width:360px;margin:0 auto 2rem}
+.sum-box{background:rgba(217,43,43,.04);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem;margin-bottom:2rem;text-align:left}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
+.sum-row:last-child{border:none}
+.sum-k{color:var(--mute);font-family:var(--font-mono);font-size:10px;letter-spacing:.5px}
+.sum-v{font-weight:500;color:var(--red)}
+.wa-open-btn{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:15px 30px;border-radius:var(--r);transition:all .2s}
+.wa-open-btn:hover{background:#1ebe5c}
+
+/* ============================================================
+   ADMIN PANEL
+   ============================================================ */
+.admin-overlay{position:fixed;inset:0;z-index:500;background:rgba(8,9,10,0);pointer-events:none;transition:all .5s}
+.admin-overlay.open{background:rgba(8,9,10,.65);pointer-events:all}
+.admin-panel{position:fixed;top:0;right:-100%;width:min(1000px,100%);height:100vh;background:var(--ink2);border-left:1px solid var(--border2);z-index:501;transition:right .45s cubic-bezier(.77,0,.18,1);display:flex;flex-direction:column;overflow:hidden}
+.admin-panel.open{right:0}
+.adm-head{background:var(--ink);border-bottom:1px solid var(--border2);padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.adm-logo{display:flex;align-items:center;gap:12px}
+.adm-logo-ico{width:34px;height:34px;background:var(--red);border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:18px;color:#fff}
+.adm-title{font-family:var(--font-head);font-size:18px;letter-spacing:3px;text-transform:uppercase}
+.adm-sub{font-family:var(--font-mono);font-size:9px;letter-spacing:1px;color:var(--mute);margin-top:1px;text-transform:uppercase}
+.adm-close{background:none;border:1px solid var(--border2);color:var(--mute);width:36px;height:36px;border-radius:var(--r);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.adm-close:hover{background:var(--red);border-color:var(--red);color:#fff}
+.adm-tabs{display:flex;background:var(--ink);border-bottom:1px solid var(--border2);flex-shrink:0}
+.adm-tab{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:13px 22px;border:none;background:none;color:var(--mute);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:8px}
+.adm-tab:hover{color:var(--white)}
+.adm-tab.on{color:var(--red);border-bottom-color:var(--red)}
+.adm-tab-num{background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px}
+.adm-body{flex:1;overflow-y:auto;padding:2rem}
+.adm-body::-webkit-scrollbar{width:3px}
+.adm-tab-pane{display:none}.adm-tab-pane.on{display:block}
+/* KPIs */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.kpi{background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r);padding:1.25rem;border-top:2px solid var(--red)}
+.kpi-n{font-family:var(--font-head);font-size:38px;color:var(--red);line-height:1}
+.kpi-l{font-family:var(--font-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mute);margin-top:4px}
+/* table */
+.tbl-toolbar{display:flex;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;align-items:center}
+.tbl-search{flex:1;min-width:160px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:10px 13px;font-family:var(--font-body);font-size:12px;color:var(--white);outline:none;transition:border-color .2s}
+.tbl-search:focus{border-color:var(--red)}
+.tbl-search::placeholder{color:rgba(245,243,239,.2)}
+.tbl-search.sm{max-width:150px;flex:none}
+.btn-add{background:var(--red);color:#fff;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.btn-add:hover{background:var(--red2)}
+.adm-table{width:100%;border-collapse:collapse}
+.adm-table th{font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--mute);padding:9px 11px;text-align:left;border-bottom:1px solid var(--border2);white-space:nowrap}
+.adm-table td{padding:11px;border-bottom:1px solid rgba(217,43,43,.04);font-size:12px;vertical-align:middle}
+.adm-table tr:hover td{background:rgba(217,43,43,.02)}
+.adm-table tr:last-child td{border:none}
+.t-img{width:54px;height:38px;object-fit:cover;border-radius:4px;border:1px solid var(--border2)}
+.t-img-ph{width:54px;height:38px;border-radius:4px;border:1px solid var(--border2);background:var(--ink3);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:16px}
+.t-name{font-weight:500;color:var(--white);font-size:13px}
+.t-brand{font-family:var(--font-mono);font-size:9px;color:var(--red);letter-spacing:1px;text-transform:uppercase}
+.t-price{font-family:var(--font-head);font-size:16px;color:var(--red)}
+.t-badge{display:inline-flex;padding:3px 8px;border-radius:2px;font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase}
+.t-badge.avail{background:rgba(22,163,74,.12);color:#22c55e}
+.t-badge.sold{background:rgba(92,90,86,.12);color:var(--mute)}
+.t-badge.new{background:rgba(217,43,43,.12);color:var(--red)}
+.t-badge.hot{background:rgba(201,32,32,.12);color:#e63030}
+.t-badge.deal{background:rgba(22,163,74,.12);color:#22c55e}
+.t-actions{display:flex;gap:5px}
+.t-btn{width:29px;height:29px;border-radius:4px;border:1px solid var(--border2);background:none;color:var(--mute);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.t-btn.e:hover{border-color:var(--red);color:var(--red);background:rgba(217,43,43,.07)}
+.t-btn.d:hover{border-color:#e63030;color:#e63030;background:rgba(230,48,48,.07)}
+.t-btn.g:hover{border-color:#22c55e;color:#22c55e;background:rgba(22,163,74,.07)}
+.no-data{text-align:center;padding:3rem;color:var(--mute)}
+.no-data i{font-size:36px;display:block;margin-bottom:.75rem;opacity:.25}
+/* enquiry inbox */
+.enq-list{display:flex;flex-direction:column;gap:.75rem}
+.enq-card{background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r);padding:1.25rem;cursor:pointer;transition:all .2s}
+.enq-card:hover{border-color:rgba(217,43,43,.25)}
+.enq-card.unread{border-left:3px solid var(--red)}
+.enq-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+.enq-name{font-size:13px;font-weight:500;color:var(--white)}
+.enq-time{font-family:var(--font-mono);font-size:9px;color:var(--mute);letter-spacing:.5px}
+.enq-car{font-family:var(--font-mono);font-size:10px;color:var(--red);letter-spacing:1px;text-transform:uppercase;margin-bottom:.4rem}
+.enq-msg{font-size:12px;color:var(--mute);line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.enq-dot{width:7px;height:7px;background:var(--red);border-radius:50%;flex-shrink:0}
+/* testimonials admin */
+.testi-admin-card{background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r);padding:1.25rem;margin-bottom:.75rem}
+.testi-admin-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem}
+
+/* ============================================================
+   CAR FORM
+   ============================================================ */
+.cf-overlay{position:fixed;inset:0;z-index:600;background:rgba(8,9,10,.96);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
+.cf-overlay.open{opacity:1;pointer-events:all}
+.cf-box{background:var(--ink2);border:1px solid var(--border);border-radius:var(--r2);width:100%;max-width:740px;max-height:90vh;overflow-y:auto}
+.cf-box::-webkit-scrollbar{width:3px}
+.cf-head{background:linear-gradient(135deg,rgba(217,43,43,.08),rgba(217,43,43,.01));border-bottom:1px solid var(--border);padding:1.4rem 1.75rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;backdrop-filter:blur(12px)}
+.cf-head h3{font-family:var(--font-head);font-size:20px;letter-spacing:2px;text-transform:uppercase}
+.cf-body{padding:1.75rem}
+.cf-sec{margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border2)}
+.cf-sec:last-child{border:none;margin-bottom:0;padding-bottom:0}
+.cf-sec-title{font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:1.1rem}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:.85rem}
+.cf-row.three{grid-template-columns:1fr 1fr 1fr}
+.cf-grp{display:flex;flex-direction:column}
+.cf-lbl{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.cf-inp{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:var(--r);padding:11px 13px;font-family:var(--font-body);font-size:13px;color:var(--white);outline:none;transition:border-color .2s;width:100%}
+.cf-inp:focus{border-color:var(--red);background:rgba(217,43,43,.03)}
+.cf-inp::placeholder{color:rgba(245,243,239,.18)}
+.cf-inp option{background:#1a1b1e}
+.cf-img-prev{width:100%;height:140px;border:2px dashed var(--border);border-radius:var(--r);overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.02);margin-bottom:.85rem}
+.cf-img-prev img{width:100%;height:100%;object-fit:cover}
+.cf-img-ph{text-align:center;color:var(--mute)}
+.cf-img-ph i{font-size:26px;display:block;margin-bottom:6px;opacity:.4}
+.cf-img-ph p{font-size:11px}
+.cf-img-row{display:flex;gap:8px}
+.cf-img-row .cf-inp{flex:1}
+.cf-prev-btn{background:rgba(217,43,43,.1);border:1px solid var(--border);color:var(--red);font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:11px 13px;border-radius:var(--r);cursor:pointer;white-space:nowrap;transition:all .2s}
+.cf-prev-btn:hover{background:rgba(217,43,43,.2)}
+.badge-row{display:flex;gap:.55rem;flex-wrap:wrap}
+.badge-opt{display:flex;align-items:center;gap:7px;padding:7px 13px;border:1px solid var(--border2);border-radius:2px;cursor:pointer;font-family:var(--font-mono);font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--mute);transition:all .2s}
+.badge-opt input{display:none}
+.badge-opt.s-new{border-color:var(--red);color:var(--red);background:rgba(217,43,43,.07)}
+.badge-opt.s-hot{border-color:#e63030;color:#e63030;background:rgba(230,48,48,.07)}
+.badge-opt.s-deal{border-color:#22c55e;color:#22c55e;background:rgba(22,163,74,.07)}
+.cf-footer{display:flex;gap:.85rem;padding:1.25rem 1.75rem;border-top:1px solid var(--border2);background:var(--ink2);position:sticky;bottom:0}
+.cf-cancel{background:none;border:1px solid var(--border2);color:var(--mute);font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:12px 22px;border-radius:var(--r);cursor:pointer;transition:all .2s}
+.cf-cancel:hover{border-color:var(--white);color:var(--white)}
+.cf-save{flex:1;background:var(--red);color:#fff;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:13px;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.cf-save:hover{background:var(--red2)}
+
+/* TESTIMONIAL FORM */
+.tf-overlay{position:fixed;inset:0;z-index:600;background:rgba(8,9,10,.96);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
+.tf-overlay.open{opacity:1;pointer-events:all}
+.tf-box{background:var(--ink2);border:1px solid var(--border);border-radius:var(--r2);width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
+
+/* CONFIRM */
+.confirm-overlay{position:fixed;inset:0;z-index:700;background:rgba(8,9,10,.9);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
+.confirm-overlay.open{opacity:1;pointer-events:all}
+.confirm-box{background:var(--ink2);border:1px solid rgba(230,48,48,.25);border-radius:var(--r2);padding:2.5rem;max-width:400px;width:100%;text-align:center}
+.confirm-box h3{font-family:var(--font-head);font-size:22px;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
+.confirm-box p{font-size:13px;color:var(--mute);line-height:1.7;margin-bottom:2rem}
+.confirm-box p strong{color:var(--white)}
+.confirm-btns{display:flex;gap:.85rem}
+.c-cancel{flex:1;background:none;border:1px solid var(--border2);color:var(--mute);font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:13px;border-radius:var(--r);cursor:pointer;transition:all .2s}
+.c-cancel:hover{border-color:var(--white);color:var(--white)}
+.c-del{flex:1;background:#e63030;color:#fff;font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;padding:13px;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s}
+.c-del:hover{background:#c72020}
+
+/* ENQ DETAIL MODAL */
+.enq-detail-overlay{position:fixed;inset:0;z-index:700;background:rgba(8,9,10,.9);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
+.enq-detail-overlay.open{opacity:1;pointer-events:all}
+.enq-detail-box{background:var(--ink2);border:1px solid var(--border);border-radius:var(--r2);width:100%;max-width:560px;padding:2rem}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1200px){.cars-grid{grid-template-columns:1fr 1fr}.car-card.feat{grid-column:span 1}.car-card.feat .car-img{height:218px}.kpi-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1024px){.hero-inner{grid-template-columns:1fr}.hero-panel{display:none}.whyus-inner{grid-template-columns:1fr;gap:3rem}.enquiry-inner{grid-template-columns:1fr;gap:3rem}.foot-grid{grid-template-columns:1fr 1fr;gap:2rem}}
+@media(max-width:768px){.nav-links,.nav-wa{display:none}.hamburger{display:flex}.stats-inner{grid-template-columns:repeat(2,1fr)}.cars-grid{grid-template-columns:1fr}.testi-grid{grid-template-columns:1fr}.features-grid{grid-template-columns:1fr}.metrics-grid{grid-template-columns:1fr}.f-row,.mf-row,.cf-row,.cf-row.three{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}.intent-grid{grid-template-columns:1fr 1fr}.kpi-row{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.hero-title{font-size:clamp(72px,18vw,100px)}.hero-cta-row{flex-direction:column}.confirm-box,.enq-detail-box{padding:1.5rem}.testi-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- Pass Django context to JS -->
+<script>
+var IS_STAFF = {{ user.is_staff|yesno:"true,false" }};
+var CSRF = '{{ csrf_token }}';
+</script>
+
+<!-- ===== ADMIN PANEL ===== -->
+{% if user.is_staff %}
+<div class="admin-overlay" id="adminOverlay" onclick="if(event.target===this)closeAdmin()">
+  <div class="admin-panel" id="adminPanel">
+    <div class="adm-head">
+      <div class="adm-logo">
+        <div class="adm-logo-ico">E</div>
+        <div>
+          <div class="adm-title">Elizade Dashboard</div>
+          <div class="adm-sub">Live Database · Management</div>
+        </div>
+      </div>
+      <button class="adm-close" onclick="closeAdmin()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="adm-tabs">
+      <button class="adm-tab on" onclick="switchAdmTab('overview',this)"><i class="fas fa-chart-bar"></i> Overview</button>
+      <button class="adm-tab" onclick="switchAdmTab('inventory',this)"><i class="fas fa-car"></i> Inventory <span class="adm-tab-num" id="invCount">0</span></button>
+      <button class="adm-tab" onclick="switchAdmTab('enquiries',this)"><i class="fas fa-envelope"></i> Enquiries <span class="adm-tab-num" id="enqCount">0</span></button>
+      <button class="adm-tab" onclick="switchAdmTab('testimonials',this)"><i class="fas fa-star"></i> Testimonials</button>
+    </div>
+    <div class="adm-body">
+
+      <!-- OVERVIEW -->
+      <div class="adm-tab-pane on" id="pane-overview">
+        <div class="kpi-row">
+          <div class="kpi"><div class="kpi-n" id="kTotal">—</div><div class="kpi-l">Total Vehicles</div></div>
+          <div class="kpi"><div class="kpi-n" id="kAvail" style="color:#22c55e">—</div><div class="kpi-l">Available</div></div>
+          <div class="kpi"><div class="kpi-n" id="kSold" style="color:var(--mute)">—</div><div class="kpi-l">Sold</div></div>
+          <div class="kpi"><div class="kpi-n" id="kVal">—</div><div class="kpi-l">Stock Value</div></div>
+        </div>
+        <div style="background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r);padding:1.4rem;margin-bottom:1.5rem">
+          <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:1rem">Quick Actions</div>
+          <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+            <button class="btn-add" onclick="switchAdmTab('inventory',document.querySelectorAll('.adm-tab')[1]);openCF()"><i class="fas fa-plus"></i> Add Vehicle</button>
+            <button class="btn-add" style="background:rgba(217,43,43,.1);color:var(--red)" onclick="switchAdmTab('testimonials',document.querySelectorAll('.adm-tab')[3]);openTF()"><i class="fas fa-plus"></i> Add Testimonial</button>
+            <button class="btn-add" style="background:rgba(217,43,43,.1);color:var(--red)" onclick="switchAdmTab('enquiries',document.querySelectorAll('.adm-tab')[2])"><i class="fas fa-envelope"></i> View Enquiries</button>
+          </div>
+        </div>
+        <div style="background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r);padding:1.4rem">
+          <div style="font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:1rem">Stock by Brand</div>
+          <div id="brandChart"></div>
+        </div>
+      </div>
+
+      <!-- INVENTORY TABLE -->
+      <div class="adm-tab-pane" id="pane-inventory">
+        <div class="tbl-toolbar">
+          <input type="text" class="tbl-search" id="invSearch" placeholder="Search brand or model..." oninput="filterInv()">
+          <select id="invStatus" class="tbl-search sm" onchange="filterInv()">
+            <option value="">All Status</option>
+            <option value="available">Available</option>
+            <option value="sold">Sold</option>
+          </select>
+          <button class="btn-add" onclick="openCF()"><i class="fas fa-plus"></i> Add</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="adm-table">
+            <thead><tr>
+              <th>Photo</th><th>Vehicle</th><th>Year</th><th>Price</th><th>Badge</th><th>Status</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="invBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ENQUIRIES INBOX -->
+      <div class="adm-tab-pane" id="pane-enquiries">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--mute)">All customer enquiries from the contact form</div>
+          <button class="btn-add" style="background:rgba(217,43,43,.1);color:var(--red)" onclick="clearEnquiries()"><i class="fas fa-trash"></i> Clear All</button>
+        </div>
+        <div class="enq-list" id="enqList"></div>
+      </div>
+
+      <!-- TESTIMONIALS MANAGEMENT -->
+      <div class="adm-tab-pane" id="pane-testimonials">
+        <div class="tbl-toolbar" style="margin-bottom:1.5rem">
+          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:1px;color:var(--mute);flex:1">Manage customer testimonials shown on the site</div>
+          <button class="btn-add" onclick="openTF()"><i class="fas fa-plus"></i> Add Testimonial</button>
+        </div>
+        <div id="testiAdminList"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CAR FORM -->
+<div class="cf-overlay" id="cfOverlay">
+  <div class="cf-box">
+    <div class="cf-head">
+      <h3 id="cfTitle">Add New Vehicle</h3>
+      <button class="adm-close" onclick="closeCF()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cf-body">
+      <input type="hidden" id="cfId">
+      <div class="cf-sec">
+        <div class="cf-sec-title">Vehicle Identity</div>
+        <div class="cf-row">
+          <div class="cf-grp"><label class="cf-lbl">Brand *</label>
+            <select id="cfBrand" class="cf-inp">
+              <option value="">Select...</option>
+              <option>Toyota</option><option>Mercedes-Benz</option><option>BMW</option>
+              <option>Lexus</option><option>Honda</option><option>Nissan</option>
+              <option>Volkswagen</option><option>Hyundai</option><option>Kia</option>
+              <option>Land Rover</option><option>Porsche</option><option>Audi</option>
+              <option>Bentley</option><option>Peugeot</option><option>Ford</option>
+              <option>Mitsubishi</option><option>Infiniti</option><option>Mazda</option>
+              <option>Renault</option><option>Other</option>
+            </select>
+          </div>
+          <div class="cf-grp"><label class="cf-lbl">Model *</label><input type="text" id="cfModel" class="cf-inp" placeholder="e.g. Camry, G-Wagon..."></div>
+        </div>
+        <div class="cf-row three">
+          <div class="cf-grp"><label class="cf-lbl">Year *</label><select id="cfYear" class="cf-inp"></select></div>
+          <div class="cf-grp"><label class="cf-lbl">Category *</label>
+            <select id="cfCategory" class="cf-inp">
+              <option value="">Select...</option>
+              <option value="suv">SUV / Crossover</option>
+              <option value="sedan">Sedan</option>
+              <option value="luxury">Luxury</option>
+              <option value="sport">Sports Car</option>
+              <option value="pickup">Pickup / Truck</option>
+              <option value="van">Van / Minibus</option>
+            </select>
+          </div>
+          <div class="cf-grp"><label class="cf-lbl">Mileage (km)</label><input type="number" id="cfMileage" class="cf-inp" placeholder="e.g. 12000"></div>
+        </div>
+        <div class="cf-row three">
+          <div class="cf-grp"><label class="cf-lbl">Fuel</label><select id="cfFuel" class="cf-inp"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option></select></div>
+          <div class="cf-grp"><label class="cf-lbl">Transmission</label><select id="cfTrans" class="cf-inp"><option>Automatic</option><option>Manual</option></select></div>
+          <div class="cf-grp"><label class="cf-lbl">Colour</label><input type="text" id="cfColour" class="cf-inp" placeholder="e.g. Black"></div>
+        </div>
+      </div>
+      <div class="cf-sec">
+        <div class="cf-sec-title">Pricing & Display</div>
+        <div class="cf-row">
+          <div class="cf-grp"><label class="cf-lbl">Price (₦) *</label><input type="number" id="cfPrice" class="cf-inp" placeholder="e.g. 45000000"></div>
+          <div class="cf-grp"><label class="cf-lbl">Price Note</label><input type="text" id="cfPriceNote" class="cf-inp" placeholder="e.g. Negotiable"></div>
+        </div>
+        <div class="cf-grp" style="margin-bottom:.85rem">
+          <label class="cf-lbl">Badge</label>
+          <div class="badge-row" id="badgeRow">
+            <label class="badge-opt"><input type="radio" name="cfBadge" value="new"> New Arrival</label>
+            <label class="badge-opt"><input type="radio" name="cfBadge" value="hot"> 🔥 Hot</label>
+            <label class="badge-opt"><input type="radio" name="cfBadge" value="deal"> Best Deal</label>
+            <label class="badge-opt"><input type="radio" name="cfBadge" value="" checked> No Badge</label>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <input type="checkbox" id="cfFeat" style="width:16px;height:16px;accent-color:var(--red)">
+          <span style="font-size:13px;color:var(--mute)">Featured vehicle (larger card on storefront)</span>
+        </div>
+      </div>
+      <div class="cf-sec">
+        <div class="cf-sec-title">Vehicle Photo</div>
+        <div class="cf-img-prev" id="cfImgPrev"><div class="cf-img-ph"><i class="fas fa-camera"></i><p>No image set</p></div></div>
+        <div class="cf-img-row">
+          <input type="text" id="cfImgUrl" class="cf-inp" placeholder="Paste image URL from Unsplash or any source...">
+          <button class="cf-prev-btn" onclick="previewCfImg()">Preview</button>
+        </div>
+        <p style="font-family:var(--font-mono);font-size:9px;color:var(--mute);margin-top:6px;letter-spacing:.5px">TIP: Go to unsplash.com → search car model → right-click image → Copy image address</p>
+      </div>
+      <div class="cf-sec">
+        <div class="cf-sec-title">WhatsApp Message</div>
+        <div class="cf-grp"><label class="cf-lbl">Inquiry message (auto-filled when customer clicks WhatsApp)</label>
+          <input type="text" id="cfWa" class="cf-inp" placeholder="e.g. I want the Toyota Camry 2024">
+        </div>
+      </div>
+    </div>
+    <div class="cf-footer">
+      <button class="cf-cancel" onclick="closeCF()">Cancel</button>
+      <button class="cf-save" onclick="saveCar()"><i class="fas fa-save"></i> <span id="cfSaveTxt">Save Vehicle</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIAL FORM -->
+<div class="tf-overlay" id="tfOverlay">
+  <div class="tf-box">
+    <div class="cf-head">
+      <h3 id="tfTitle">Add Testimonial</h3>
+      <button class="adm-close" onclick="closeTF()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cf-body">
+      <input type="hidden" id="tfId">
+      <div class="cf-row">
+        <div class="cf-grp"><label class="cf-lbl">Customer Name *</label><input type="text" id="tfName" class="cf-inp" placeholder="e.g. Chief Adebayo O."></div>
+        <div class="cf-grp"><label class="cf-lbl">Location</label><input type="text" id="tfLoc" class="cf-inp" placeholder="e.g. Lekki, Lagos"></div>
+      </div>
+      <div class="cf-grp" style="margin-bottom:1rem">
+        <label class="cf-lbl">Rating (stars)</label>
+        <select id="tfRating" class="cf-inp">
+          <option value="5">5 Stars ★★★★★</option>
+          <option value="4">4 Stars ★★★★</option>
+          <option value="3">3 Stars ★★★</option>
+        </select>
+      </div>
+      <div class="cf-grp" style="margin-bottom:1rem">
+        <label class="cf-lbl">Testimonial Text *</label>
+        <textarea id="tfText" class="cf-inp" rows="4" placeholder="What the customer said about Elizade Motors..."></textarea>
+      </div>
+    </div>
+    <div class="cf-footer">
+      <button class="cf-cancel" onclick="closeTF()">Cancel</button>
+      <button class="cf-save" onclick="saveTesti()"><i class="fas fa-save"></i> <span id="tfSaveTxt">Save Testimonial</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div style="font-size:36px;margin-bottom:1rem">⚠️</div>
+    <h3>Confirm Delete</h3>
+    <p>Are you sure you want to permanently delete <strong id="confirmName"></strong>? This cannot be undone.</p>
+    <div class="confirm-btns">
+      <button class="c-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="c-del" onclick="confirmDelete()"><i class="fas fa-trash"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ENQUIRY DETAIL -->
+<div class="enq-detail-overlay" id="enqDetailOverlay">
+  <div class="enq-detail-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+      <div style="font-family:var(--font-head);font-size:20px;letter-spacing:2px;text-transform:uppercase">Enquiry Detail</div>
+      <button class="adm-close" onclick="closeEnqDetail()"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="enqDetailBody"></div>
+    <div style="margin-top:1.5rem;display:flex;gap:.75rem">
+      <a id="enqWaReply" href="#" target="_blank" class="btn-add" style="background:#25D366;flex:1;justify-content:center;text-decoration:none"><i class="fab fa-whatsapp"></i> Reply on WhatsApp</a>
+      <button class="c-cancel" onclick="closeEnqDetail()">Close</button>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- ===== INQUIRY MODAL (per car) ===== -->
+<div class="modal-overlay" id="inquiryModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <div class="modal-car-make" id="mCarMake"></div>
+        <div class="modal-car-name" id="mCarName"></div>
+        <div class="modal-car-price" id="mCarPrice"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-prog">
+      <div class="prog-track"><div class="prog-fill" id="progFill" style="width:33%"></div></div>
+      <span class="prog-txt" id="progTxt">Step 1 of 3</span>
+    </div>
+    <div class="modal-body">
+      <!-- Step 1 -->
+      <div class="m-step active" id="ms1">
+        <div class="m-step-title">Your Intent</div>
+        <div class="m-step-sub">Tell us how you plan to proceed so we prepare the right offer.</div>
+        <div class="intent-grid">
+          <div class="intent-card" onclick="pickIntent(this,'Buy Immediately')"><div class="intent-icon">🔑</div><h4>Buy Now</h4><p>I'm ready to close fast.</p></div>
+          <div class="intent-card" onclick="pickIntent(this,'Test Drive')"><div class="intent-icon">🚗</div><h4>Test Drive</h4><p>I want to come in first.</p></div>
+          <div class="intent-card" onclick="pickIntent(this,'Need Finance')"><div class="intent-icon">💳</div><h4>Finance</h4><p>I need a payment plan.</p></div>
+          <div class="intent-card" onclick="pickIntent(this,'Just Enquiring')"><div class="intent-icon">💬</div><h4>Enquire</h4><p>I want more details.</p></div>
+        </div>
+        <div class="mf-grp">
+          <label class="mf-lbl">When are you looking to buy?</label>
+          <select id="mTimeline" class="mf-inp"><option value="">Select...</option><option>Within 24 hours</option><option>This week</option><option>Within 2 weeks</option><option>Within a month</option><option>Just researching</option></select>
+        </div>
+        <div class="m-nav">
+          <button class="m-next" id="ms1Btn" onclick="gotoStep(2)" disabled>Continue <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- Step 2 -->
+      <div class="m-step" id="ms2">
+        <div class="m-step-title">Your Details</div>
+        <div class="m-step-sub">We'll send you specs, photos and our best price directly.</div>
+        <div class="mf-row">
+          <div class="mf-grp"><label class="mf-lbl">Full Name *</label><input type="text" id="mName" class="mf-inp" placeholder="Your full name"><div class="mf-err" id="errMName">Please enter your name</div></div>
+          <div class="mf-grp"><label class="mf-lbl">Phone *</label><input type="tel" id="mPhone" class="mf-inp" placeholder="0803 000 0000"><div class="mf-err" id="errMPhone">Enter a valid number</div></div>
+        </div>
+        <div class="mf-grp"><label class="mf-lbl">State / Location</label>
+          <select id="mState" class="mf-inp"><option value="">Select state...</option><option>Lagos</option><option>Abuja (FCT)</option><option>Rivers</option><option>Kano</option><option>Oyo</option><option>Delta</option><option>Anambra</option><option>Enugu</option><option>Kaduna</option><option>Other</option></select>
+        </div>
+        <div class="mf-grp"><label class="mf-lbl">Need delivery?</label>
+          <div class="tog-row" id="tg-delivery">
+            <button class="tog" onclick="setTog('tg-delivery',this,'Yes')">Yes — Deliver to Me</button>
+            <button class="tog" onclick="setTog('tg-delivery',this,'No')">No — I'll Pick Up</button>
+          </div>
+        </div>
+        <div class="m-nav">
+          <button class="m-back" onclick="gotoStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+          <button class="m-next" onclick="gotoStep(3)">Continue <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <!-- Step 3 -->
+      <div class="m-step" id="ms3">
+        <div class="m-step-title">Preferences</div>
+        <div class="m-step-sub">Help us bring you the sharpest deal on this vehicle.</div>
+        <div class="mf-row">
+          <div class="mf-grp"><label class="mf-lbl">Preferred Colour</label><select id="mColour" class="mf-inp"><option value="">Any</option><option>Black</option><option>White</option><option>Silver</option><option>Grey</option><option>Blue</option><option>Red</option><option>Other</option></select></div>
+          <div class="mf-grp"><label class="mf-lbl">Payment Method</label><select id="mPayment" class="mf-inp"><option value="">Select...</option><option>Full Cash</option><option>Bank Transfer</option><option>Bank Finance</option><option>Installment</option><option>Trade-In</option></select></div>
+        </div>
+        <div class="mf-grp"><label class="mf-lbl">Trade-in?</label>
+          <div class="tog-row" id="tg-trade">
+            <button class="tog" onclick="setTog('tg-trade',this,'Yes');document.getElementById('tradeField').style.display='block'">Yes — I Have One</button>
+            <button class="tog" onclick="setTog('tg-trade',this,'No');document.getElementById('tradeField').style.display='none'">No Trade-In</button>
+          </div>
+        </div>
+        <div class="mf-grp" id="tradeField" style="display:none"><label class="mf-lbl">Trade-In Details</label><input type="text" id="mTrade" class="mf-inp" placeholder="e.g. Toyota Camry 2020, 45,000km, good condition"></div>
+        <div class="mf-grp"><label class="mf-lbl">Notes / Questions</label><textarea id="mNotes" class="mf-inp" rows="3" placeholder="Any special requests..."></textarea></div>
+        <div class="m-nav">
+          <button class="m-back" onclick="gotoStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+          <button class="m-next" onclick="submitInquiry()" id="inquirySubmitBtn"><span id="inqTxt">Send via WhatsApp</span> <i class="fab fa-whatsapp" id="inqIco"></i></button>
+        </div>
+      </div>
+      <!-- Success -->
+      <div class="m-step" id="msSuccess">
+        <div class="success-wrap">
+          <div class="success-ico">✓</div>
+          <h3>Inquiry Sent!</h3>
+          <p>Our team has received your inquiry on WhatsApp and will respond within minutes with photos, specs and our best price.</p>
+          <div class="sum-box" id="sumBox"></div>
+          <a href="#" id="waOpenLink" target="_blank" class="wa-open-btn"><i class="fab fa-whatsapp"></i> Open WhatsApp Chat</a>
+          <div style="margin-top:1.25rem"><button onclick="closeModal()" style="background:none;border:none;color:var(--mute);font-size:12px;cursor:pointer;text-decoration:underline;font-family:var(--font-mono)">Close &amp; Continue Browsing</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker">
+  <div class="ticker-wrap">
+    <span class="ticker-item">🔥 New Arrivals In Stock Now</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Best Price Guarantee — We Beat Any Competitor</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Nationwide Delivery Across Nigeria</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Flexible Bank Finance Available</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">100% Verified & Duty Cleared Vehicles</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Call: 0803 943 2707 / 0813 910 2838</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">🔥 New Arrivals In Stock Now</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Best Price Guarantee — We Beat Any Competitor</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Nationwide Delivery Across Nigeria</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Flexible Bank Finance Available</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">100% Verified & Duty Cleared Vehicles</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">Call: 0803 943 2707 / 0813 910 2838</span><span class="ticker-dot">◆</span>
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="logo-badge">E</div>
+    <div class="logo-copy"><h1>Elizade</h1><p>Motors Lagos</p></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#inventory">Inventory</a></li>
+    <li><a href="#whyus">Why Us</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#enquiry">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    {% if user.is_staff %}
+    <button class="nav-admin-btn" onclick="openAdmin()"><i class="fas fa-shield-alt"></i> Admin</button>
+    {% endif %}
+    <a href="https://wa.me/2348039432707?text=Hello%20Elizade%20Motors" target="_blank" rel="noopener" class="nav-wa"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+  </div>
+  <button class="hamburger" id="ham"><i class="fas fa-bars"></i></button>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" id="mobClose"><i class="fas fa-times"></i></button>
+  <a href="#inventory" onclick="closeMob()">Inventory</a>
+  <a href="#whyus" onclick="closeMob()">Why Us</a>
+  <a href="#testimonials" onclick="closeMob()">Reviews</a>
+  <a href="#enquiry" onclick="closeMob()">Contact</a>
+  <a href="https://wa.me/2348039432707" target="_blank" style="color:var(--red)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><span class="pulse-dot"></span>Nigeria's Trusted Car Dealer — Lagos</div>
+      <h1 class="hero-title">DRIVE<br>YOUR <span class="hl">DREAM.</span><br><span class="ol">OWN</span><br><span class="ol-r">YOUR</span> FUTURE.</h1>
+      <p class="hero-sub">Premium new and pre-owned vehicles. Verified, duty-cleared, nationwide delivery. Trusted by over 1,500 Nigerian families.</p>
+      <div class="hero-cta-row">
+        <a href="#inventory" class="cta-primary"><i class="fas fa-car"></i> Browse Inventory</a>
+        <a href="#enquiry" class="cta-ghost"><i class="fas fa-envelope"></i> Send Enquiry</a>
+        <a href="https://wa.me/2348039432707?text=Hello%20Elizade%20Motors%2C%20I%20need%20a%20quote" target="_blank" rel="noopener" class="cta-ghost"><i class="fab fa-whatsapp"></i> WhatsApp Quote</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-chip"><i class="fas fa-shield-check"></i> 100% Verified</div>
+        <div class="trust-chip"><i class="fas fa-truck"></i> Nationwide Delivery</div>
+        <div class="trust-chip"><i class="fas fa-star"></i> 4.8★ Rated</div>
+        <div class="trust-chip"><i class="fas fa-handshake"></i> Finance Available</div>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="hp-top"><span class="hp-title">Live Stock</span><span class="hp-live">Updated Daily</span></div>
+      <div class="hp-rows">
+        <div class="hp-row"><span class="hp-lbl">Cars Available</span><span class="hp-val">{{ total_stock }}+</span></div>
+        <div class="hp-row"><span class="hp-lbl">Starting From</span><span class="hp-val">{% if min_price %}{{ min_price.formatted_price }}{% else %}—{% endif %}</span></div>
+        <div class="hp-row"><span class="hp-lbl">Sold This Month</span><span class="hp-val">{{ sold_count }}</span></div>
+        <div class="hp-row"><span class="hp-lbl">Delivery Time</span><span class="hp-val">3 Days</span></div>
+      </div>
+      <div class="hp-foot"><span>All Verified & Cleared</span><div class="hp-bars"><div class="hp-bar"></div><div class="hp-bar"></div><div class="hp-bar"></div><div class="hp-bar"></div><div class="hp-bar"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-block reveal"><div class="stat-num">1,500+</div><div class="stat-lbl">Happy Customers</div></div>
+    <div class="stat-block reveal"><div class="stat-num">{{ total_stock }}+</div><div class="stat-lbl">Cars In Stock</div></div>
+    <div class="stat-block reveal"><div class="stat-num">10 Yrs</div><div class="stat-lbl">In Business</div></div>
+    <div class="stat-block reveal"><div class="stat-num">4.8★</div><div class="stat-lbl">Google Rating</div></div>
+  </div>
+</div>
+
+<!-- ===== BRANDS ===== -->
+<div class="brands-section">
+  <div class="brands-inner">
+    <div class="brands-lbl">Brands We Deal In</div>
+    <div class="brands-row">
+      <span class="brand-tag">Toyota</span><span class="brand-tag">Mercedes</span><span class="brand-tag">BMW</span>
+      <span class="brand-tag">Lexus</span><span class="brand-tag">Honda</span><span class="brand-tag">Nissan</span>
+      <span class="brand-tag">Volkswagen</span><span class="brand-tag">Bentley</span><span class="brand-tag">Peugeot</span><span class="brand-tag">Porsche</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INVENTORY ===== -->
+<section id="inventory" class="inv-section">
+  <div class="inv-inner">
+    <div class="inv-header reveal">
+      <div>
+        <div class="sec-eyebrow">Current Stock</div>
+        <h2 class="sec-heading">FEATURED <span class="hl">VEHICLES</span></h2>
+      </div>
+      <p style="color:var(--mute);font-size:14px;line-height:1.8;max-width:320px">All vehicles are 100% verified, duty-cleared, and ready for immediate delivery across Nigeria.</p>
+    </div>
+    <div class="filter-strip reveal">
+      <button class="flt-btn on" onclick="filterCars('all',this)">All Vehicles</button>
+      <button class="flt-btn" onclick="filterCars('suv',this)">SUVs</button>
+      <button class="flt-btn" onclick="filterCars('sedan',this)">Sedans</button>
+      <button class="flt-btn" onclick="filterCars('luxury',this)">Luxury</button>
+      <button class="flt-btn" onclick="filterCars('sport',this)">Sports</button>
+    </div>
+    <div class="cars-grid" id="carsGrid">
+      {% for car in cars %}
+      <div class="car-card {% if car.featured %}feat{% endif %} reveal" data-cat="{{ car.category }}">
+        <div class="car-img">
+          {% if car.image_url %}
+          <img src="{{ car.image_url }}" alt="{{ car.brand }} {{ car.model }}" loading="lazy"
+               onerror="this.parentElement.innerHTML='<div class=car-no-img><i class=fas\ fa-car></i></div>'">
+          {% else %}
+          <div class="car-no-img"><i class="fas fa-car"></i></div>
+          {% endif %}
+          {% if car.badge == 'new' %}<span class="car-lbl lbl-new">New</span>
+          {% elif car.badge == 'hot' %}<span class="car-lbl lbl-hot">🔥 Hot</span>
+          {% elif car.badge == 'deal' %}<span class="car-lbl lbl-deal">Best Deal</span>
+          {% endif %}
+          <a href="https://wa.me/2348039432707?text={{ car.wa_message|urlencode }}" target="_blank" class="car-quick-wa"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="car-body">
+          <div class="car-make">{{ car.brand }}</div>
+          <div class="car-name">{{ car.model }}</div>
+          <div class="car-meta">
+            <span><i class="fas fa-calendar"></i>{{ car.year }}</span>
+            {% if car.mileage %}<span><i class="fas fa-road"></i>{{ car.mileage|floatformat:0 }} km</span>{% endif %}
+            {% if car.fuel %}<span><i class="fas fa-gas-pump"></i>{{ car.fuel }}</span>{% endif %}
+            {% if car.transmission %}<span><i class="fas fa-cog"></i>{{ car.transmission }}</span>{% endif %}
+          </div>
+          <div class="car-price-row">
+            <div class="car-price">{{ car.formatted_price }}</div>
+            {% if car.price_note %}<div class="car-price-note">/ {{ car.price_note }}</div>{% endif %}
+          </div>
+          <div class="car-btns">
+            <button class="car-btn-cta" onclick="openModal('{{ car.brand }}','{{ car.model }}','{{ car.formatted_price }}')">
+              <i class="fas fa-paper-plane"></i> Inquire Now
+            </button>
+            <a href="https://wa.me/2348039432707?text={{ car.wa_message|urlencode }}" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="grid-empty">
+        <i class="fas fa-car"></i>
+        <p>No vehicles in stock yet. Check back soon or contact us on WhatsApp.</p>
+        <a href="https://wa.me/2348039432707" target="_blank" class="cta-primary" style="display:inline-flex"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+      </div>
+      {% endfor %}
+    </div>
+    <div style="text-align:center;margin-top:3rem" class="reveal">
+      <a href="https://wa.me/2348039432707?text=Hello%20Elizade%2C%20show%20me%20your%20full%20inventory!" target="_blank" class="cta-primary" style="display:inline-flex;font-size:12px"><i class="fab fa-whatsapp"></i> View Full Inventory on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY US ===== -->
+<section id="whyus" class="whyus-section">
+  <div class="whyus-inner">
+    <div class="whyus-text reveal">
+      <div class="sec-eyebrow">Our Promise</div>
+      <h2 class="sec-heading" style="margin-bottom:1.5rem">WHY LAGOS <span class="hl">CHOOSES</span> US</h2>
+      <p>Elizade Motors has been Lagos' most trusted premium car dealer for over 10 years. We don't just sell cars — we deliver confidence, quality, and exceptional service from first inquiry to final delivery.</p>
+      <div class="features-grid">
+        <div class="feat-card"><div class="feat-icon">🛡️</div><h4>100% Verified</h4><p>Full inspection and history check on every vehicle before listing.</p></div>
+        <div class="feat-card"><div class="feat-icon">💰</div><h4>Best Price</h4><p>We guarantee to beat any verified competitor price in Lagos.</p></div>
+        <div class="feat-card"><div class="feat-icon">🚚</div><h4>Fast Delivery</h4><p>Nationwide delivery within 3–5 working days, anywhere in Nigeria.</p></div>
+        <div class="feat-card"><div class="feat-icon">🤝</div><h4>Finance Plans</h4><p>Flexible bank finance and installment payment plans available.</p></div>
+      </div>
+      <a href="#enquiry" class="cta-primary" style="display:inline-flex;margin-top:2rem;font-size:12px"><i class="fas fa-envelope"></i> Send Us an Enquiry</a>
+    </div>
+    <div class="metrics-grid reveal">
+      <div class="metric-cell"><div class="metric-num">1.5K+</div><div class="metric-lbl">Cars Sold</div></div>
+      <div class="metric-cell"><div class="metric-num">10 Yrs</div><div class="metric-lbl">In Business</div></div>
+      <div class="metric-cell"><div class="metric-num">100%</div><div class="metric-lbl">Verified Stock</div></div>
+      <div class="metric-cell"><div class="metric-num">4.8★</div><div class="metric-lbl">Customer Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section id="testimonials" class="testi-section">
+  <div class="testi-inner">
+    <div class="testi-header reveal">
+      <div>
+        <div class="sec-eyebrow">Client Reviews</div>
+        <h2 class="sec-heading">WHAT OUR <span class="hl">CLIENTS</span> SAY</h2>
+      </div>
+      <a href="#enquiry" class="cta-ghost" style="font-size:11px;font-family:var(--font-mono);letter-spacing:1.5px">Leave a Review <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="testi-grid" id="testiGrid">
+      <!-- Rendered by JavaScript from localStorage or defaults -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== ENQUIRY SECTION ===== -->
+<section id="enquiry" class="enquiry-section">
+  <div class="enquiry-inner">
+    <div class="reveal">
+      <div class="sec-eyebrow">Get In Touch</div>
+      <h2 class="sec-heading" style="margin-bottom:1.5rem">LET'S FIND YOUR <span class="hl">PERFECT</span> CAR</h2>
+      <p class="enquiry-left p">Tell us what you are looking for and we will find it. Our team responds within minutes via WhatsApp or email.</p>
+      <div class="contact-list">
+        <a href="tel:+2348039432707" class="contact-row"><div class="c-ico"><i class="fas fa-phone"></i></div><div><div class="c-lbl">Call Us</div><div class="c-val">0803 943 2707</div></div></a>
+        <a href="tel:+2348139102838" class="contact-row"><div class="c-ico"><i class="fas fa-phone"></i></div><div><div class="c-lbl">Alternate Line</div><div class="c-val">0813 910 2838</div></div></a>
+        <a href="mailto:sales@elizademotors.ng" class="contact-row"><div class="c-ico"><i class="fas fa-envelope"></i></div><div><div class="c-lbl">Email</div><div class="c-val">sales@elizademotors.ng</div></div></a>
+        <div class="contact-row"><div class="c-ico"><i class="fas fa-map-marker-alt"></i></div><div><div class="c-lbl">Showroom</div><div class="c-val">Lekki Phase 1 & Ikeja, Lagos</div></div></div>
+        <div class="contact-row"><div class="c-ico"><i class="fas fa-clock"></i></div><div><div class="c-lbl">Hours</div><div class="c-val">Mon–Sat: 8am–7pm · Sun: 10am–4pm</div></div></div>
+      </div>
+      <a href="https://wa.me/2348039432707?text=Hello%20Elizade%20Motors%2C%20I%27d%20like%20to%20enquire%20about%20a%20car." target="_blank" rel="noopener" class="wa-cta-big"><i class="fab fa-whatsapp"></i> Chat with Us on WhatsApp</a>
+    </div>
+
+    <!-- ENQUIRY FORM -->
+    <div class="enquiry-form-box reveal">
+      <div id="formView">
+        <h3 class="form-title">Send an Enquiry</h3>
+        <p class="form-sub">Fill this form and we will respond within 30 minutes during business hours. Your enquiry is saved to our admin dashboard.</p>
+        <div class="f-row">
+          <div class="f-grp"><label class="f-lbl">Full Name *</label><input type="text" id="fName" class="f-inp" placeholder="Your full name"><div class="f-err" id="errFName">Please enter your name</div></div>
+          <div class="f-grp"><label class="f-lbl">Phone Number *</label><input type="tel" id="fPhone" class="f-inp" placeholder="0803 000 0000"><div class="f-err" id="errFPhone">Enter a valid phone number</div></div>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Email Address</label><input type="email" id="fEmail" class="f-inp" placeholder="your@email.com"></div>
+        <div class="f-row">
+          <div class="f-grp"><label class="f-lbl">Preferred Brand</label>
+            <select id="fBrand" class="f-inp"><option value="">Any brand</option><option>Toyota</option><option>Mercedes-Benz</option><option>BMW</option><option>Lexus</option><option>Honda</option><option>Nissan</option><option>Volkswagen</option><option>Peugeot</option><option>Land Rover</option><option>Porsche</option><option>Bentley</option><option>Other</option></select>
+          </div>
+          <div class="f-grp"><label class="f-lbl">Budget *</label>
+            <select id="fBudget" class="f-inp"><option value="">Select budget...</option><option>Under 20M</option><option>20M – 50M</option><option>50M – 100M</option><option>100M – 200M</option><option>Above 200M</option></select>
+            <div class="f-err" id="errFBudget">Please select a budget</div>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-grp"><label class="f-lbl">Vehicle Type</label>
+            <select id="fType" class="f-inp"><option value="">Any type</option><option>SUV / Crossover</option><option>Sedan</option><option>Sports Car</option><option>Pickup / Truck</option><option>Van / Minibus</option></select>
+          </div>
+          <div class="f-grp"><label class="f-lbl">Your State</label>
+            <select id="fState" class="f-inp"><option value="">Select state...</option><option>Lagos</option><option>Abuja (FCT)</option><option>Rivers</option><option>Kano</option><option>Oyo</option><option>Delta</option><option>Anambra</option><option>Enugu</option><option>Other</option></select>
+          </div>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Message / Special Requirements</label>
+          <textarea id="fMessage" class="f-inp" rows="4" placeholder="Tell us more about what you need — specific year, colour, features, urgency..."></textarea>
+        </div>
+        <button class="form-submit" id="formSubmitBtn" onclick="submitEnquiry()">
+          <span id="formBtnTxt">Send Enquiry</span>
+          <i class="fas fa-paper-plane" id="formBtnIco"></i>
+        </button>
+        <p style="font-family:var(--font-mono);font-size:9px;color:var(--mute);margin-top:1rem;letter-spacing:.5px;text-align:center">We also reply instantly on WhatsApp — button above</p>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">✓</div>
+        <h4>Enquiry Received!</h4>
+        <p>Thank you! Your enquiry has been saved and our team will contact you within 30 minutes. You can also reach us instantly on WhatsApp.</p>
+        <div style="margin-top:1.5rem;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+          <a href="https://wa.me/2348039432707" target="_blank" class="cta-primary" style="font-size:11px"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+          <button onclick="resetForm()" style="background:none;border:1px solid var(--border2);color:var(--mute);font-family:var(--font-mono);font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:13px 22px;border-radius:var(--r);cursor:pointer;transition:all .2s">Send Another</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a href="#" class="nav-logo" style="display:inline-flex;margin-bottom:.5rem"><div class="logo-badge">E</div><div class="logo-copy" style="margin-left:14px"><h1>Elizade</h1><p>Motors Lagos</p></div></a>
+      <p>Nigeria's trusted premium car dealer. New & pre-owned vehicles with guaranteed authenticity, best prices, and nationwide delivery.</p>
+      <div class="foot-socials">
+        <a href="#" class="soc"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="soc"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="soc"><i class="fab fa-twitter"></i></a>
+        <a href="https://wa.me/2348039432707" target="_blank" class="soc"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" class="soc"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="foot-col"><h4>Quick Links</h4><ul class="foot-links"><li><a href="#inventory">Browse Inventory</a></li><li><a href="#whyus">Why Choose Us</a></li><li><a href="#testimonials">Client Reviews</a></li><li><a href="#enquiry">Send Enquiry</a></li></ul></div>
+    <div class="foot-col"><h4>Brands</h4><ul class="foot-links"><li><a href="#">Toyota</a></li><li><a href="#">Mercedes-Benz</a></li><li><a href="#">BMW</a></li><li><a href="#">Lexus</a></li><li><a href="#">Honda</a></li><li><a href="#">Nissan</a></li><li><a href="#">Volkswagen</a></li></ul></div>
+    <div class="foot-col"><h4>Contact</h4><ul class="foot-links"><li><a href="tel:+2348039432707">0803 943 2707</a></li><li><a href="tel:+2348139102838">0813 910 2838</a></li><li><a href="mailto:sales@elizademotors.ng">sales@elizademotors.ng</a></li><li>Lekki Phase 1, Lagos</li><li>Ikeja, Lagos</li></ul></div>
+  </div>
+  <div class="foot-bottom"><span>© 2026 Elizade Motors · All Rights Reserved</span><span>Lekki Phase 1 & Ikeja, Lagos, Nigeria</span></div>
+</footer>
+
+<a href="https://wa.me/2348039432707?text=Hello%20Elizade%20Motors" target="_blank" rel="noopener" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
+<div id="toast"></div>
+
+<script>
+// ============================================================
+// UTILITIES
+// ============================================================
+function fmtPrice(n){
+  if(!n) return '₦0';
+  if(n>=1000000000) return '₦'+(n/1e9).toFixed(1)+'B';
+  if(n>=1000000) return '₦'+(n/1e6).toFixed(1)+'M';
+  return '₦'+Number(n).toLocaleString();
+}
+function toast(msg,err){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.borderColor=err?'rgba(230,48,48,.3)':'rgba(255,255,255,.07)';
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},3500);
+}
+function now(){ return new Date().toLocaleString('en-NG',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
+
+// ============================================================
+// NAV & SCROLL
+// ============================================================
+window.addEventListener('scroll',function(){
+  document.getElementById('navbar').classList.toggle('stuck',scrollY>60);
+  document.getElementById('btt').classList.toggle('show',scrollY>400);
+});
+document.getElementById('ham').onclick=function(){document.getElementById('mobMenu').classList.add('open');};
+document.getElementById('mobClose').onclick=function(){document.getElementById('mobMenu').classList.remove('open');};
+function closeMob(){document.getElementById('mobMenu').classList.remove('open');}
+
+// ============================================================
+// REVEAL ON SCROLL
+// ============================================================
+document.querySelectorAll('.reveal').forEach(function(el){
+  new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('in');});},{threshold:.1}).observe(el);
+});
+
+// ============================================================
+// STOREFRONT FILTER
+// ============================================================
+function filterCars(cat,btn){
+  document.querySelectorAll('.flt-btn').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  document.querySelectorAll('.car-card').forEach(function(c){
+    c.style.display=(cat==='all'||(c.dataset.cat||'').includes(cat))?'flex':'none';
+  });
+}
+
+// ============================================================
+// TESTIMONIALS — stored in localStorage, seeded with defaults
+// ============================================================
+var DEFAULT_TESTIS = [
+  {id:1,name:'Chief Adebayo O.',loc:'Ikeja, Lagos',rating:5,text:'Got my dream G-Wagon delivered in less than 5 days. The documentation was seamless and the car was immaculate. Elizade Motors is simply the best in Lagos!'},
+  {id:2,name:'Folake A.',loc:'Victoria Island, Lagos',rating:5,text:'I was skeptical buying a Lexus LX600 online but Elizade walked me through everything. The car arrived spotless. I have already referred four friends!'},
+  {id:3,name:'Emeka N.',loc:'Lekki, Lagos',rating:5,text:'Best price in all of Lagos. They beat three other dealers by 2M on my BMW 5 Series. Fast process, professional team, and excellent after-sales support.'},
+];
+function loadTestis(){
+  try{ return JSON.parse(localStorage.getItem('elizade_testis'))||DEFAULT_TESTIS; }
+  catch(e){ return DEFAULT_TESTIS; }
+}
+function saveTestis(arr){ try{localStorage.setItem('elizade_testis',JSON.stringify(arr));}catch(e){} }
+function renderTestis(){
+  var arr=loadTestis();
+  var stars=function(n){return Array(n).fill('<i class="fas fa-star"></i>').join('');};
+  var grid=document.getElementById('testiGrid');
+  grid.innerHTML=arr.map(function(t){
+    return '<div class="testi-card reveal">'
+      +'<div class="testi-stars">'+stars(t.rating)+'</div>'
+      +'<div class="testi-quote">'+t.text+'</div>'
+      +'<div class="testi-author">'
+        +'<div class="testi-avatar">'+t.name.charAt(0)+'</div>'
+        +'<div><div class="testi-name">'+t.name+'</div><div class="testi-loc">'+t.loc+'</div></div>'
+      +'</div></div>';
+  }).join('');
+  // re-observe new cards
+  grid.querySelectorAll('.reveal').forEach(function(el){
+    new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('in');});},{threshold:.1}).observe(el);
+  });
+}
+renderTestis();
+
+// ============================================================
+// ENQUIRIES — stored in localStorage
+// ============================================================
+function loadEnqs(){ try{return JSON.parse(localStorage.getItem('elizade_enqs'))||[];}catch(e){return[];} }
+function saveEnqs(arr){ try{localStorage.setItem('elizade_enqs',JSON.stringify(arr));}catch(e){} }
+
+// ============================================================
+// ENQUIRY FORM SUBMISSION
+// ============================================================
+function submitEnquiry(){
+  var name=document.getElementById('fName').value.trim();
+  var phone=document.getElementById('fPhone').value.trim();
+  var budget=document.getElementById('fBudget').value;
+  var ok=true;
+  document.querySelectorAll('.f-err').forEach(function(e){e.style.display='none';});
+  if(!name){document.getElementById('errFName').style.display='block';ok=false;}
+  if(phone.length<7){document.getElementById('errFPhone').style.display='block';ok=false;}
+  if(!budget){document.getElementById('errFBudget').style.display='block';ok=false;}
+  if(!ok) return;
+
+  var btn=document.getElementById('formSubmitBtn');
+  document.getElementById('formBtnTxt').textContent='Sending...';
+  document.getElementById('formBtnIco').className='fas fa-spinner fa-spin';
+  btn.disabled=true;
+
+  setTimeout(function(){
+    var enq={
+      id:Date.now(),
+      name:name,
+      phone:phone,
+      email:document.getElementById('fEmail').value,
+      brand:document.getElementById('fBrand').value||'Flexible',
+      budget:budget,
+      type:document.getElementById('fType').value||'Any',
+      state:document.getElementById('fState').value||'Not stated',
+      message:document.getElementById('fMessage').value||'No message',
+      time:now(),
+      read:false
+    };
+    var enqs=loadEnqs();
+    enqs.unshift(enq);
+    saveEnqs(enqs);
+
+    // Also send to WhatsApp
+    var txt=encodeURIComponent(
+      'NEW ENQUIRY — Elizade Motors Website\n\n'
+      +'Name: '+enq.name+'\nPhone: '+enq.phone
+      +'\nEmail: '+(enq.email||'Not provided')
+      +'\nBrand: '+enq.brand+'\nBudget: '+enq.budget
+      +'\nType: '+enq.type+'\nState: '+enq.state
+      +'\n\nMessage:\n'+enq.message
+    );
+    window.open('https://wa.me/2348039432707?text='+txt,'_blank');
+
+    document.getElementById('formView').style.display='none';
+    document.getElementById('formSuccess').style.display='block';
+    document.getElementById('enqCount').textContent=enqs.filter(function(e){return!e.read;}).length||enqs.length;
+    document.getElementById('formBtnTxt').textContent='Send Enquiry';
+    document.getElementById('formBtnIco').className='fas fa-paper-plane';
+    btn.disabled=false;
+  },800);
+}
+function resetForm(){
+  document.getElementById('formView').style.display='block';
+  document.getElementById('formSuccess').style.display='none';
+  document.getElementById('fName').value='';
+  document.getElementById('fPhone').value='';
+  document.getElementById('fEmail').value='';
+  document.getElementById('fMessage').value='';
+  ['fBrand','fBudget','fType','fState'].forEach(function(id){document.getElementById(id).selectedIndex=0;});
+}
+// init enq count
+(function(){
+  var e=loadEnqs();
+  if(e.length) document.getElementById('enqCount').textContent=e.length;
+})();
+
+// ============================================================
+// ADMIN PANEL
+// ============================================================
+var allCars=[];
+var deleteId=null;
+var deleteType='car';
+var editId=null;
+
+function openAdmin(){
+  if(!IS_STAFF){toast('Admin access required.',true);return;}
+  document.getElementById('adminOverlay').classList.add('open');
+  document.getElementById('adminPanel').classList.add('open');
+  document.body.style.overflow='hidden';
+  loadInventory();
+  renderEnqInbox();
+  renderTestiAdmin();
+}
+function closeAdmin(){
+  document.getElementById('adminOverlay').classList.remove('open');
+  document.getElementById('adminPanel').classList.remove('open');
+  document.body.style.overflow='';
+}
+function switchAdmTab(tab,btn){
+  document.querySelectorAll('.adm-tab').forEach(function(t){t.classList.remove('on');});
+  document.querySelectorAll('.adm-tab-pane').forEach(function(p){p.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  document.getElementById('pane-'+tab).classList.add('on');
+}
+
+// ============================================================
+// INVENTORY API CALLS
+// ============================================================
+async function loadInventory(){
+  try{
+    var res=await fetch('/api/cars/');
+    var data=await res.json();
+    allCars=data.cars;
+    renderOverview();
+    renderInvTable(allCars);
+    document.getElementById('invCount').textContent=allCars.length;
+  }catch(e){ toast('Failed to load inventory.',true); }
+}
+function renderOverview(){
+  var av=allCars.filter(function(c){return c.status==='available';});
+  var so=allCars.filter(function(c){return c.status==='sold';});
+  var val=av.reduce(function(s,c){return s+Number(c.price);},0);
+  document.getElementById('kTotal').textContent=allCars.length;
+  document.getElementById('kAvail').textContent=av.length;
+  document.getElementById('kSold').textContent=so.length;
+  document.getElementById('kVal').textContent=fmtPrice(val);
+  // brand chart
+  var brands={};
+  allCars.forEach(function(c){brands[c.brand]=(brands[c.brand]||0)+1;});
+  var sorted=Object.entries(brands).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
+  var max=sorted.length?sorted[0][1]:1;
+  document.getElementById('brandChart').innerHTML=sorted.map(function(b){
+    var pct=Math.round((b[1]/max)*100);
+    return '<div style="display:flex;align-items:center;gap:10px;font-size:12px;margin-bottom:9px">'
+      +'<span style="width:120px;color:var(--white);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+b[0]+'</span>'
+      +'<div style="flex:1;height:6px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden">'
+        +'<div style="height:100%;width:'+pct+'%;background:var(--red);border-radius:3px"></div>'
+      +'</div>'
+      +'<span style="font-family:var(--font-head);font-size:16px;color:var(--red);width:18px;text-align:right">'+b[1]+'</span>'
+    +'</div>';
+  }).join('');
+}
+function filterInv(){
+  var q=(document.getElementById('invSearch').value||'').toLowerCase();
+  var st=document.getElementById('invStatus').value;
+  renderInvTable(allCars.filter(function(c){
+    return(!q||(c.brand+' '+c.model).toLowerCase().includes(q))&&(!st||c.status===st);
+  }));
+}
+function renderInvTable(cars){
+  var body=document.getElementById('invBody');
+  if(!cars.length){body.innerHTML='<tr><td colspan="7"><div class="no-data"><i class="fas fa-car"></i><p>No vehicles found</p></div></td></tr>';return;}
+  body.innerHTML=cars.map(function(c){
+    var bdg={new:'new',hot:'hot',deal:'deal'}[c.badge]||'';
+    var bdgLbl={new:'New',hot:'🔥 Hot',deal:'Best Deal'}[c.badge]||'—';
+    return '<tr>'
+      +'<td>'+(c.image_url?'<img src="'+c.image_url+'" class="t-img">':'<div class="t-img-ph"><i class="fas fa-car"></i></div>')+'</td>'
+      +'<td><div class="t-name">'+c.model+'</div><div class="t-brand">'+c.brand+'</div></td>'
+      +'<td style="color:var(--mute)">'+c.year+'</td>'
+      +'<td><div class="t-price">'+fmtPrice(c.price)+'</div></td>'
+      +'<td>'+(bdg?'<span class="t-badge '+bdg+'">'+bdgLbl+'</span>':'<span style="color:var(--mute);font-size:11px">—</span>')+'</td>'
+      +'<td><span class="t-badge '+(c.status==='available'?'avail':'sold')+'">'+(c.status==='available'?'Available':'Sold')+'</span></td>'
+      +'<td><div class="t-actions">'
+        +'<button class="t-btn e" onclick="openCF('+c.id+')" title="Edit"><i class="fas fa-edit"></i></button>'
+        +'<button class="t-btn g" onclick="toggleCar('+c.id+')" title="'+(c.status==='available'?'Mark Sold':'Mark Available')+'"><i class="fas fa-'+(c.status==='available'?'check':'undo')+'"></i></button>'
+        +'<button class="t-btn d" onclick="openConfirm('+c.id+',\'car\',\''+c.brand+' '+c.model+'\')" title="Delete"><i class="fas fa-trash"></i></button>'
+      +'</div></td>'
+    +'</tr>';
+  }).join('');
+}
+async function toggleCar(id){
+  var r=await fetch('/api/cars/'+id+'/toggle/',{method:'POST',headers:{'X-CSRFToken':CSRF}});
+  var d=await r.json();
+  if(d.success){toast('Status updated to '+d.status);loadInventory();setTimeout(function(){location.reload();},1400);}
+  else toast('Update failed.',true);
+}
+
+// ============================================================
+// DELETE
+// ============================================================
+function openConfirm(id,type,name){
+  deleteId=id; deleteType=type;
+  document.getElementById('confirmName').textContent=name||'this item';
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('open');deleteId=null;}
+async function confirmDelete(){
+  if(deleteType==='car'){
+    var r=await fetch('/api/cars/'+deleteId+'/delete/',{method:'DELETE',headers:{'X-CSRFToken':CSRF}});
+    var d=await r.json();
+    if(d.success){toast('Vehicle deleted.');loadInventory();setTimeout(function(){location.reload();},1400);}
+    else toast('Delete failed.',true);
+  }
+  if(deleteType==='testi'){
+    var arr=loadTestis().filter(function(t){return t.id!==deleteId;});
+    saveTestis(arr);
+    renderTestiAdmin();
+    renderTestis();
+    toast('Testimonial deleted.');
+  }
+  if(deleteType==='enq'){
+    var enqs=loadEnqs().filter(function(e){return e.id!==deleteId;});
+    saveEnqs(enqs);
+    renderEnqInbox();
+    toast('Enquiry deleted.');
+  }
+  closeConfirm();
+}
+
+// ============================================================
+// CAR FORM
+// ============================================================
+(function(){
+  var sel=document.getElementById('cfYear');
+  for(var y=new Date().getFullYear()+1;y>=2005;y--){
+    var o=document.createElement('option');
+    o.value=y;o.textContent=y;sel.appendChild(o);
+  }
+})();
+document.querySelectorAll('.badge-opt').forEach(function(lbl){
+  lbl.querySelector('input').addEventListener('change',function(){
+    document.querySelectorAll('.badge-opt').forEach(function(l){l.className='badge-opt';});
+    var cls={new:'s-new',hot:'s-hot',deal:'s-deal'}[this.value];
+    if(cls) lbl.className='badge-opt '+cls;
+  });
+});
+function openCF(id){
+  editId=id||null;
+  document.getElementById('cfTitle').textContent=id?'Edit Vehicle':'Add New Vehicle';
+  document.getElementById('cfSaveTxt').textContent=id?'Update Vehicle':'Save Vehicle';
+  document.getElementById('cfId').value=id||'';
+  ['cfBrand','cfModel','cfYear','cfCategory','cfColour','cfPrice','cfPriceNote','cfImgUrl','cfWa'].forEach(function(i){var el=document.getElementById(i);if(el)el.value='';});
+  document.getElementById('cfMileage').value='';
+  document.getElementById('cfFeat').checked=false;
+  document.querySelectorAll('.badge-opt').forEach(function(l){l.className='badge-opt';});
+  document.querySelector('.badge-opt:last-child input').checked=true;
+  setCfImg('');
+  if(id){
+    var c=allCars.find(function(x){return x.id===id;});
+    if(c){
+      document.getElementById('cfBrand').value=c.brand;
+      document.getElementById('cfModel').value=c.model;
+      document.getElementById('cfYear').value=c.year;
+      document.getElementById('cfCategory').value=(c.category||'').split(' ')[0];
+      document.getElementById('cfFuel').value=c.fuel||'Petrol';
+      document.getElementById('cfTrans').value=c.transmission||'Automatic';
+      document.getElementById('cfColour').value=c.colour||'';
+      document.getElementById('cfMileage').value=c.mileage||'';
+      document.getElementById('cfPrice').value=c.price||'';
+      document.getElementById('cfPriceNote').value=c.price_note||'';
+      document.getElementById('cfImgUrl').value=c.image_url||'';
+      document.getElementById('cfWa').value=c.wa_message||'';
+      document.getElementById('cfFeat').checked=!!c.featured;
+      if(c.image_url) setCfImg(c.image_url);
+      document.querySelectorAll('.badge-opt').forEach(function(l){
+        l.className='badge-opt';
+        var inp=l.querySelector('input');
+        if(inp.value===(c.badge||'')){
+          inp.checked=true;
+          var cls={new:'s-new',hot:'s-hot',deal:'s-deal'}[c.badge];
+          if(cls) l.className='badge-opt '+cls;
+        }
+      });
+    }
+  }
+  document.getElementById('cfOverlay').classList.add('open');
+}
+function closeCF(){document.getElementById('cfOverlay').classList.remove('open');editId=null;}
+function previewCfImg(){setCfImg(document.getElementById('cfImgUrl').value.trim());}
+function setCfImg(url){
+  var el=document.getElementById('cfImgPrev');
+  el.innerHTML=url?'<img src="'+url+'" onerror="this.parentElement.innerHTML=\'<div class=cf-img-ph><i class=\\\"fas fa-exclamation-circle\\\"></i><p>Image failed to load</p></div>\'">':'<div class="cf-img-ph"><i class="fas fa-camera"></i><p>No image set</p></div>';
+}
+async function saveCar(){
+  var brand=document.getElementById('cfBrand').value;
+  var model=document.getElementById('cfModel').value.trim();
+  var year=document.getElementById('cfYear').value;
+  var price=document.getElementById('cfPrice').value;
+  var cat=document.getElementById('cfCategory').value;
+  if(!brand||!model||!year||!price||!cat){toast('Fill in all required fields.',true);return;}
+  var bEl=document.querySelector('input[name="cfBadge"]:checked');
+  var payload={
+    brand,model,year:parseInt(year),category:cat,
+    fuel:document.getElementById('cfFuel').value,
+    transmission:document.getElementById('cfTrans').value,
+    mileage:parseInt(document.getElementById('cfMileage').value)||0,
+    colour:document.getElementById('cfColour').value,
+    price:parseInt(price),
+    priceNote:document.getElementById('cfPriceNote').value,
+    badge:bEl?bEl.value:'',
+    featured:document.getElementById('cfFeat').checked,
+    img:document.getElementById('cfImgUrl').value.trim(),
+    waMsg:document.getElementById('cfWa').value.trim()||'I want the '+brand+' '+model,
+  };
+  document.getElementById('cfSaveTxt').textContent='Saving...';
+  try{
+    var url=editId?'/api/cars/'+editId+'/update/':'/api/cars/create/';
+    var method=editId?'PUT':'POST';
+    var r=await fetch(url,{method,headers:{'Content-Type':'application/json','X-CSRFToken':CSRF},body:JSON.stringify(payload)});
+    var d=await r.json();
+    if(d.success){toast(editId?'Vehicle updated!':'Vehicle added!');closeCF();loadInventory();setTimeout(function(){location.reload();},1400);}
+    else toast('Error: '+(d.error||'Unknown'),true);
+  }catch(e){toast('Network error.',true);}
+  finally{document.getElementById('cfSaveTxt').textContent=editId?'Update Vehicle':'Save Vehicle';}
+}
+
+// ============================================================
+// TESTIMONIAL FORM
+// ============================================================
+var editTestiId=null;
+function openTF(id){
+  editTestiId=id||null;
+  document.getElementById('tfTitle').textContent=id?'Edit Testimonial':'Add Testimonial';
+  document.getElementById('tfSaveTxt').textContent=id?'Update':'Save';
+  ['tfName','tfLoc','tfText'].forEach(function(i){document.getElementById(i).value='';});
+  document.getElementById('tfRating').selectedIndex=0;
+  if(id){
+    var t=loadTestis().find(function(x){return x.id===id;});
+    if(t){
+      document.getElementById('tfName').value=t.name;
+      document.getElementById('tfLoc').value=t.loc;
+      document.getElementById('tfRating').value=t.rating;
+      document.getElementById('tfText').value=t.text;
+    }
+  }
+  document.getElementById('tfId').value=id||'';
+  document.getElementById('tfOverlay').classList.add('open');
+}
+function closeTF(){document.getElementById('tfOverlay').classList.remove('open');editTestiId=null;}
+function saveTesti(){
+  var name=document.getElementById('tfName').value.trim();
+  var text=document.getElementById('tfText').value.trim();
+  if(!name||!text){toast('Name and testimonial text are required.',true);return;}
+  var arr=loadTestis();
+  if(editTestiId){
+    var idx=arr.findIndex(function(t){return t.id===editTestiId;});
+    if(idx>-1){
+      arr[idx]={id:editTestiId,name,loc:document.getElementById('tfLoc').value.trim(),rating:parseInt(document.getElementById('tfRating').value),text};
+    }
+    toast('Testimonial updated!');
+  }else{
+    arr.push({id:Date.now(),name,loc:document.getElementById('tfLoc').value.trim(),rating:parseInt(document.getElementById('tfRating').value),text});
+    toast('Testimonial added!');
+  }
+  saveTestis(arr);
+  closeTF();
+  renderTestiAdmin();
+  renderTestis();
+}
+function renderTestiAdmin(){
+  var arr=loadTestis();
+  var stars=function(n){return Array(n).fill('★').join('');};
+  var el=document.getElementById('testiAdminList');
+  if(!arr.length){el.innerHTML='<div class="no-data"><i class="fas fa-star"></i><p>No testimonials yet. Add one above.</p></div>';return;}
+  el.innerHTML=arr.map(function(t){
+    return '<div class="testi-admin-card">'
+      +'<div class="testi-admin-top">'
+        +'<div><div style="font-size:13px;font-weight:500;color:var(--white)">'+t.name+'</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--mute);margin-top:2px">'+t.loc+' · '+stars(t.rating)+'</div></div>'
+        +'<div class="t-actions">'
+          +'<button class="t-btn e" onclick="openTF('+t.id+')" title="Edit"><i class="fas fa-edit"></i></button>'
+          +'<button class="t-btn d" onclick="openConfirm('+t.id+',\'testi\',\''+t.name+'\'s testimonial\')" title="Delete"><i class="fas fa-trash"></i></button>'
+        +'</div>'
+      +'</div>'
+      +'<div style="font-size:12px;color:var(--mute);line-height:1.6">'+t.text+'</div>'
+    +'</div>';
+  }).join('');
+}
+
+// ============================================================
+// ENQUIRY INBOX
+// ============================================================
+var currentEnqId=null;
+function renderEnqInbox(){
+  var enqs=loadEnqs();
+  var el=document.getElementById('enqList');
+  if(!enqs.length){el.innerHTML='<div class="no-data"><i class="fas fa-envelope"></i><p>No enquiries yet. They will appear here when customers fill the contact form.</p></div>';return;}
+  el.innerHTML=enqs.map(function(e){
+    return '<div class="enq-card'+(e.read?'':' unread')+'" onclick="viewEnq('+e.id+')">'
+      +'<div class="enq-top"><span class="enq-name">'+e.name+'</span><div style="display:flex;align-items:center;gap:8px"><span class="enq-time">'+e.time+'</span>'+(e.read?'':'<div class="enq-dot"></div>')+'</div></div>'
+      +'<div class="enq-car">'+e.brand+' · Budget: '+e.budget+'</div>'
+      +'<div class="enq-msg">'+e.message+'</div>'
+    +'</div>';
+  }).join('');
+  var unread=enqs.filter(function(e){return!e.read;}).length;
+  document.getElementById('enqCount').textContent=unread||enqs.length;
+}
+function viewEnq(id){
+  var enqs=loadEnqs();
+  var e=enqs.find(function(x){return x.id===id;});
+  if(!e) return;
+  e.read=true; saveEnqs(enqs); renderEnqInbox();
+  currentEnqId=id;
+  document.getElementById('enqDetailBody').innerHTML=
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem">'
+    +'<div><div class="c-lbl">Name</div><div style="font-size:13px;font-weight:500;color:var(--white);margin-top:3px">'+e.name+'</div></div>'
+    +'<div><div class="c-lbl">Phone</div><div style="font-size:13px;color:var(--white);margin-top:3px">'+e.phone+'</div></div>'
+    +'<div><div class="c-lbl">Email</div><div style="font-size:13px;color:var(--white);margin-top:3px">'+(e.email||'Not provided')+'</div></div>'
+    +'<div><div class="c-lbl">State</div><div style="font-size:13px;color:var(--white);margin-top:3px">'+e.state+'</div></div>'
+    +'<div><div class="c-lbl">Brand</div><div style="font-size:13px;color:var(--red);margin-top:3px">'+e.brand+'</div></div>'
+    +'<div><div class="c-lbl">Budget</div><div style="font-size:13px;color:var(--red);margin-top:3px">'+e.budget+'</div></div>'
+    +'<div><div class="c-lbl">Vehicle Type</div><div style="font-size:13px;color:var(--white);margin-top:3px">'+e.type+'</div></div>'
+    +'<div><div class="c-lbl">Date</div><div style="font-family:var(--font-mono);font-size:10px;color:var(--mute);margin-top:3px">'+e.time+'</div></div>'
+    +'</div>'
+    +'<div><div class="c-lbl" style="margin-bottom:6px">Message</div><div style="background:var(--ink3);border:1px solid var(--border2);border-radius:var(--r);padding:1rem;font-size:13px;line-height:1.7;color:var(--off)">'+e.message+'</div></div>'
+    +'<div style="margin-top:1rem;display:flex;gap:.65rem">'
+      +'<button class="t-btn d" onclick="openConfirm('+e.id+',\'enq\',\''+e.name+'\'s enquiry\')" style="width:auto;padding:0 14px;gap:6px;font-size:11px"><i class="fas fa-trash"></i> Delete</button>'
+    +'</div>';
+  var waMsg=encodeURIComponent('Hello '+e.name+'! Thank you for your enquiry at Elizade Motors. Regarding your interest in '+e.brand+' (Budget: '+e.budget+') — ');
+  document.getElementById('enqWaReply').href='https://wa.me/'+e.phone.replace(/\D/g,'')+'?text='+waMsg;
+  document.getElementById('enqDetailOverlay').classList.add('open');
+}
+function closeEnqDetail(){document.getElementById('enqDetailOverlay').classList.remove('open');}
+function clearEnquiries(){
+  if(!confirm('Clear ALL enquiries? This cannot be undone.')) return;
+  saveEnqs([]);
+  renderEnqInbox();
+  document.getElementById('enqCount').textContent='0';
+  toast('All enquiries cleared.');
+}
+
+// ============================================================
+// INQUIRY MODAL (per car)
+// ============================================================
+var mCar={make:'',name:'',price:'',intent:'',delivery:'',trade:''};
+var curStep=1;
+function openModal(make,name,price){
+  mCar={make,name,price,intent:'',delivery:'',trade:''};
+  document.getElementById('mCarMake').textContent=make;
+  document.getElementById('mCarName').textContent=name;
+  document.getElementById('mCarPrice').textContent=price;
+  document.querySelectorAll('.intent-card').forEach(function(c){c.classList.remove('sel');});
+  document.querySelectorAll('.tog').forEach(function(b){b.classList.remove('on');});
+  ['mName','mPhone','mNotes','mTrade'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  ['mTimeline','mState','mColour','mPayment'].forEach(function(id){var el=document.getElementById(id);if(el)el.selectedIndex=0;});
+  document.querySelectorAll('.mf-err').forEach(function(e){e.style.display='none';});
+  document.getElementById('tradeField').style.display='none';
+  document.getElementById('ms1Btn').disabled=true;
+  showStep(1);
+  document.getElementById('inquiryModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('inquiryModal').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('inquiryModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+function showStep(n){
+  curStep=n;
+  document.querySelectorAll('.m-step').forEach(function(s){s.classList.remove('active');});
+  var t=n==='success'?document.getElementById('msSuccess'):document.getElementById('ms'+n);
+  if(t) t.classList.add('active');
+  var pct=n==='success'?100:Math.round((n/3)*100);
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('progTxt').textContent=n==='success'?'Complete':'Step '+n+' of 3';
+  document.querySelector('.modal-box').scrollTop=0;
+}
+function gotoStep(n){
+  if(n>curStep&&curStep===2&&!validateStep2()) return;
+  showStep(n);
+}
+function pickIntent(el,intent){
+  document.querySelectorAll('.intent-card').forEach(function(c){c.classList.remove('sel');});
+  el.classList.add('sel');
+  mCar.intent=intent;
+  document.getElementById('ms1Btn').disabled=false;
+}
+function setTog(grpId,btn,val){
+  document.getElementById(grpId).querySelectorAll('.tog').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  if(grpId==='tg-delivery') mCar.delivery=val;
+  if(grpId==='tg-trade') mCar.trade=val;
+}
+function validateStep2(){
+  var ok=true;
+  document.querySelectorAll('.mf-err').forEach(function(e){e.style.display='none';});
+  if(!document.getElementById('mName').value.trim()){document.getElementById('errMName').style.display='block';ok=false;}
+  if(document.getElementById('mPhone').value.trim().length<7){document.getElementById('errMPhone').style.display='block';ok=false;}
+  return ok;
+}
+function submitInquiry(){
+  if(!validateStep2()) return;
+  var btn=document.getElementById('inquirySubmitBtn');
+  document.getElementById('inqTxt').textContent='Sending...';
+  document.getElementById('inqIco').className='fas fa-spinner fa-spin';
+  btn.disabled=true;
+  var name=document.getElementById('mName').value;
+  var phone=document.getElementById('mPhone').value;
+  var wa=phone;
+  var loc=document.getElementById('mState').value||'Not stated';
+  var colour=document.getElementById('mColour').value||'Any';
+  var payment=document.getElementById('mPayment').value||'Not stated';
+  var timeline=document.getElementById('mTimeline').value||'Not stated';
+  var notes=document.getElementById('mNotes').value||'None';
+  var trade=document.getElementById('mTrade').value||'N/A';
+  var msg=encodeURIComponent(
+    'CAR PURCHASE INQUIRY — Elizade Motors\n\n'
+    +'Vehicle: '+mCar.make+' '+mCar.name+'\nPrice: '+mCar.price+'\n\n'
+    +'BUYER\nName: '+name+'\nPhone: '+phone+'\nLocation: '+loc+'\n\n'
+    +'INTENT\n'+mCar.intent+'\nTimeline: '+timeline+'\nDelivery: '+(mCar.delivery||'Not stated')+'\n\n'
+    +'PREFERENCES\nColour: '+colour+'\nPayment: '+payment+'\nTrade-In: '+(mCar.trade||'Not stated')+'\nTrade Details: '+trade+'\n\n'
+    +'NOTES\n'+notes+'\n\nPlease respond ASAP!'
+  );
+  setTimeout(function(){
+    document.getElementById('sumBox').innerHTML=
+      '<div class="sum-row"><span class="sum-k">Vehicle</span><span class="sum-v">'+mCar.name+'</span></div>'
+      +'<div class="sum-row"><span class="sum-k">Price</span><span class="sum-v">'+mCar.price+'</span></div>'
+      +'<div class="sum-row"><span class="sum-k">Name</span><span class="sum-v">'+name+'</span></div>'
+      +'<div class="sum-row"><span class="sum-k">Intent</span><span class="sum-v">'+mCar.intent+'</span></div>'
+      +'<div class="sum-row"><span class="sum-k">Payment</span><span class="sum-v">'+payment+'</span></div>';
+    document.getElementById('waOpenLink').href='https://wa.me/2348039432707?text='+msg;
+    window.open('https://wa.me/2348039432707?text='+msg,'_blank');
+    document.getElementById('inqTxt').textContent='Send via WhatsApp';
+    document.getElementById('inqIco').className='fab fa-whatsapp';
+    btn.disabled=false;
+    showStep('success');
+    toast('Inquiry sent! We will contact you shortly.');
+  },800);
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeModal();closeAdmin();closeCF();closeTF();closeConfirm();closeEnqDetail();}
+});
+</script>
+</body>
+</html>
