@@ -24,6 +24,10 @@ ALLOWED_HOSTS = config(
     cast=lambda v: [s.strip() for s in v.split(',')]
 )
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://elizade-motors.onrender.com',
+]
+
 # Add Render's auto-assigned hostname automatically
 RENDER_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_HOSTNAME:
