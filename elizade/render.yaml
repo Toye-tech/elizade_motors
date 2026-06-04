@@ -3,10 +3,14 @@ services:
     name: elizade-motors
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
+    runtime: python
+    pythonVersion: "3.11.0"
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
     startCommand: gunicorn elizade.wsgi:application
     envVars:
       - key: DEBUG
-        value: False
+        value: "False"
       - key: SECRET_KEY
         generateValue: true
+      - key: PYTHON_VERSION
+        value: "3.11.0"
