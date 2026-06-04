@@ -23,10 +23,14 @@ ALLOWED_HOSTS = config(
     default='localhost,127.0.0.1',
     cast=lambda v: [s.strip() for s in v.split(',')]
 )
-
 CSRF_TRUSTED_ORIGINS = [
     'https://elizade-motors.onrender.com',
+    'http://elizade-motors.onrender.com',
 ]
+
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 # Add Render's auto-assigned hostname automatically
 RENDER_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -142,8 +146,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ============================================================
 # PRODUCTION SECURITY — only active when DEBUG=False
 # ============================================================
+
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = False  # Render handles SSL itself
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
@@ -152,4 +158,3 @@ if not DEBUG:
     SECURE_CONTENT_TYPE_NOSNIFF = True
     X_FRAME_OPTIONS = 'DENY'
     SECURE_BROWSER_XSS_FILTER = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
