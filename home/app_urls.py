@@ -8,6 +8,8 @@ urlpatterns = [
     path('api/cars/<int:car_id>/update/', views.api_car_update, name='api_car_update'),
     path('api/cars/<int:car_id>/delete/', views.api_car_delete, name='api_car_delete'),
     path('api/cars/<int:car_id>/toggle/', views.api_car_toggle, name='api_car_toggle'),
+    path('api/payment/initiate/', views.api_initiate_payment, name='api_initiate_payment'),  # NEW
+    path('payment/verify/', views.payment_verify, name='payment_verify'),  # NEW
 ]
 path('api/cars/',
          views.api_cars_list,
@@ -28,3 +30,6 @@ path('api/cars/<int:car_id>/delete/',
 path('api/cars/<int:car_id>/toggle/',
          views.api_car_toggle,
          name='api_car_toggle'),
+
+from django.urls import path
+from . import views

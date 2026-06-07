@@ -995,11 +995,14 @@ var CSRF = '{{ csrf_token }}';
             {% if car.price_note %}<div class="car-price-note">/ {{ car.price_note }}</div>{% endif %}
           </div>
           <div class="car-btns">
-            <button class="car-btn-cta" onclick="openModal('{{ car.brand }}','{{ car.model }}','{{ car.formatted_price }}')">
-              <i class="fas fa-paper-plane"></i> Inquire Now
-            </button>
-            <a href="https://wa.me/2348039432707?text={{ car.wa_message|urlencode }}" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
-          </div>
+    <button class="car-btn-cta" onclick="openModal('{{ car.brand }}','{{ car.model }}','{{ car.formatted_price }}')">
+      <i class="fas fa-paper-plane"></i> Inquire Now
+    </button>
+    <button class="car-btn-cta" style="background:var(--gold);flex:none;padding:12px 14px" onclick="openPayment({{ car.id }},'{{ car.brand }} {{ car.model }}',{{ car.price }})">
+      <i class="fas fa-credit-card"></i>
+    </button>
+    <a href="https://wa.me/2348039432707?text={{ car.wa_message|urlencode }}" target="_blank" class="car-btn-wa"><i class="fab fa-whatsapp"></i></a>
+         </div>
         </div>
       </div>
       {% empty %}
@@ -1748,6 +1751,101 @@ function submitInquiry(){
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){closeModal();closeAdmin();closeCF();closeTF();closeConfirm();closeEnqDetail();}
 });
+</script>
+<!-- PAYSTACK SCRIPT -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<!-- PAYMENT MODAL -->
+<div class="cf-overlay" id="payOverlay">
+  <div class="cf-box" style="max-width:480px">
+    <div class="cf-head">
+      <h3 id="payTitle">Pay Deposit</h3>
+      <button class="adm-close" onclick="closePayment()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cf-body">
+      <div style="background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.2);border-radius:var(--r);padding:1rem;margin-bottom:1.5rem">
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px">Deposit Amount (10%)</div>
+        <div style="font-family:var(--font-head);font-size:32px;color:var(--gold)" id="payDepositAmt">—</div>
+        <div style="font-size:11px;color:var(--mute);margin-top:4px">Balance paid on delivery. Fully refundable if we can't deliver.</div>
+      </div>
+      <div class="cf-row">
+        <div class="cf-grp"><label class="cf-lbl">Full Name *</label><input type="text" id="payName" class="cf-inp" placeholder="Your full name"></div>
+        <div class="cf-grp"><label class="cf-lbl">Phone *</label><input type="tel" id="payPhone" class="cf-inp" placeholder="0803 000 0000"></div>
+      </div>
+      <div class="cf-grp"><label class="cf-lbl">Email Address *</label><input type="email" id="payEmail" class="cf-inp" placeholder="your@email.com"></div>
+      <p style="font-family:var(--font-mono);font-size:9px;color:var(--mute);margin-top:1rem;letter-spacing:.5px;line-height:1.6">
+        🔒 Secured by Paystack · Your payment is 100% safe and encrypted.<br>
+        Deposit reserves this vehicle for 48 hours while we complete documentation.
+      </p>
+    </div>
+    <div class="cf-footer">
+      <button class="cf-cancel" onclick="closePayment()">Cancel</button>
+      <button class="cf-save" id="payBtn" onclick="initiatePayment()"><i class="fas fa-lock"></i> <span id="payBtnTxt">Pay Deposit Securely</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// PAYSTACK PAYMENT
+// ============================================================
+var payCarId=null, payCarName='', payCarPrice=0;
+var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
+
+function openPayment(carId, carName, carPrice){
+  payCarId=carId; payCarName=carName; payCarPrice=carPrice;
+  var deposit=Math.round(carPrice*0.10);
+  document.getElementById('payTitle').textContent='Reserve: '+carName;
+  document.getElementById('payDepositAmt').textContent='₦'+deposit.toLocaleString();
+  document.getElementById('payName').value='';
+  document.getElementById('payPhone').value='';
+  document.getElementById('payEmail').value='';
+  document.getElementById('payOverlay').classList.add('open');
+}
+function closePayment(){ document.getElementById('payOverlay').classList.remove('open'); }
+
+async function initiatePayment(){
+  var name=document.getElementById('payName').value.trim();
+  var phone=document.getElementById('payPhone').value.trim();
+  var email=document.getElementById('payEmail').value.trim();
+  if(!name||!phone||!email){ toast('Please fill in all fields.',true); return; }
+  if(!email.includes('@')){ toast('Enter a valid email address.',true); return; }
+
+  document.getElementById('payBtnTxt').textContent='Processing...';
+  document.getElementById('payBtn').disabled=true;
+
+  try{
+    var res=await fetch('/api/payment/initiate/',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-CSRFToken':CSRF},
+      body:JSON.stringify({car_id:payCarId,name,phone,email})
+    });
+    var data=await res.json();
+    if(data.success){
+      // Use Paystack inline
+      var handler=PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: email,
+        amount: Math.round(payCarPrice*0.10*100),
+        currency: 'NGN',
+        ref: data.reference,
+        metadata: { name, phone, car_name: payCarName },
+        onClose: function(){ toast('Payment cancelled.'); },
+        callback: function(response){
+          window.location.href='/payment/verify/?reference='+response.reference;
+        }
+      });
+      handler.openIframe();
+      closePayment();
+    } else {
+      toast('Payment error: '+(data.error||'Unknown'),true);
+    }
+  } catch(e){ toast('Network error. Try again.',true); }
+  finally{
+    document.getElementById('payBtnTxt').textContent='Pay Deposit Securely';
+    document.getElementById('payBtn').disabled=false;
+  }
+}
 </script>
 </body>
 </html>

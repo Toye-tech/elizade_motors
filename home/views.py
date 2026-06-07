@@ -18,9 +18,91 @@ def home(request):
         'min_price'   : Car.objects.filter(
                             status='available'
                         ).order_by('price').first(),
+        'paystack_public_key': os.environ.get('PAYSTACK_PUBLIC_KEY', ''),
     }
     return render(request, 'home/home.html', context)
 
+
+import hmac
+import hashlib
+from django.views.decorators.csrf import csrf_exempt
+
+
+@require_POST
+def api_initiate_payment(request):
+    try:
+        import urllib.request
+        data = json.loads(request.body)
+        car = get_object_or_404(Car, id=data.get('car_id'))
+
+        # 10% deposit amount in kobo (Paystack uses kobo)
+        deposit = int(car.price * 0.10 * 100)
+
+        payload = json.dumps({
+            "email": data.get('email'),
+            "amount": deposit,
+            "currency": "NGN",
+            "metadata": {
+                "car_id": car.id,
+                "car_name": f"{car.brand} {car.model}",
+                "customer_name": data.get('name'),
+                "customer_phone": data.get('phone'),
+                "full_price": car.price,
+            },
+            "callback_url": request.build_absolute_uri('/payment/verify/'),
+        }).encode()
+
+        secret_key = os.environ.get('PAYSTACK_SECRET_KEY', '')
+        req = urllib.request.Request(
+            'https://api.paystack.co/transaction/initialize',
+            data=payload,
+            headers={
+                'Authorization': f'Bearer {secret_key}',
+                'Content-Type': 'application/json',
+            }
+        )
+        with urllib.request.urlopen(req) as response:
+            result = json.loads(response.read())
+
+        return JsonResponse({
+            'success': True,
+            'authorization_url': result['data']['authorization_url'],
+            'reference': result['data']['reference'],
+            'deposit_amount': deposit // 100,
+        })
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+
+
+def payment_verify(request):
+    reference = request.GET.get('reference', '')
+    if not reference:
+        return render(request, 'home/payment_result.html', {'success': False, 'message': 'No reference provided.'})
+
+    try:
+        import urllib.request
+        secret_key = os.environ.get('PAYSTACK_SECRET_KEY', '')
+        req = urllib.request.Request(
+            f'https://api.paystack.co/transaction/verify/{reference}',
+            headers={'Authorization': f'Bearer {secret_key}'}
+        )
+        with urllib.request.urlopen(req) as response:
+            result = json.loads(response.read())
+
+        if result['data']['status'] == 'success':
+            meta = result['data']['metadata']
+            return render(request, 'home/payment_result.html', {
+                'success': True,
+                'car_name': meta.get('car_name'),
+                'customer_name': meta.get('customer_name'),
+                'amount': result['data']['amount'] // 100,
+                'reference': reference,
+            })
+        else:
+            return render(request, 'home/payment_result.html',
+                          {'success': False, 'message': 'Payment was not successful.'})
+    except Exception as e:
+        return render(request, 'home/payment_result.html', {'success': False, 'message': str(e)})
 
 # ============================================================
 # CRUD API VIEWS — staff only
