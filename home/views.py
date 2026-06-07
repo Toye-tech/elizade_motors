@@ -29,6 +29,7 @@ import hashlib
 from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 @require_POST
 def api_initiate_payment(request):
     try:
