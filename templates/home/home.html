@@ -510,6 +510,7 @@ footer{background:var(--ink);border-top:1px solid var(--border2);padding:4.5rem 
 <script>
 var IS_STAFF = {{ user.is_staff|yesno:"true,false" }};
 var CSRF = '{{ csrf_token }}';
+var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
 </script>
 
 <!-- ===== ADMIN PANEL ===== -->
@@ -1790,7 +1791,7 @@ document.addEventListener('keydown',function(e){
 // PAYSTACK PAYMENT
 // ============================================================
 var payCarId=null, payCarName='', payCarPrice=0;
-var PAYSTACK_PUBLIC_KEY = '{{ pk_live_7c486f129cbc0c04c61191116f1ea903248819e4 }}';
+var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key|default:"" }}';
 
 function openPayment(carId, carName, carPrice){
   payCarId=carId; payCarName=carName; payCarPrice=carPrice;
