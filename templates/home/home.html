@@ -1790,7 +1790,7 @@ document.addEventListener('keydown',function(e){
 // PAYSTACK PAYMENT
 // ============================================================
 var payCarId=null, payCarName='', payCarPrice=0;
-var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key }}';
+var PAYSTACK_PUBLIC_KEY = '{{ pk_live_7c486f129cbc0c04c61191116f1ea903248819e4 }}';
 
 function openPayment(carId, carName, carPrice){
   payCarId=carId; payCarName=carName; payCarPrice=carPrice;
@@ -1808,51 +1808,47 @@ function initiatePayment(){
   var name=document.getElementById('payName').value.trim();
   var phone=document.getElementById('payPhone').value.trim();
   var email=document.getElementById('payEmail').value.trim();
-  if(!name||!phone||!email){ toast('Please fill in all fields.',true); return; }
-  if(!email.includes('@')){ toast('Enter a valid email address.',true); return; }
 
-  var deposit=Math.round(payCarPrice*0.10*100); // in kobo
+  if(!name){ toast('Please enter your name.',true); return; }
+  if(!phone){ toast('Please enter your phone.',true); return; }
+  if(!email||!email.includes('@')){ toast('Please enter a valid email.',true); return; }
 
-  document.getElementById('payBtnTxt').textContent='Opening Payment...';
-  document.getElementById('payBtn').disabled=true;
+  var deposit=Math.round(payCarPrice * 0.30 * 100);
 
-  var handler=PaystackPop.setup({
-    key: PAYSTACK_PUBLIC_KEY,
-    email: email,
-    amount: deposit,
-    currency: 'NGN',
-    metadata: {
-      custom_fields:[
-        {display_name:'Customer Name',variable_name:'name',value:name},
-        {display_name:'Phone',variable_name:'phone',value:phone},
-        {display_name:'Vehicle',variable_name:'car',value:payCarName},
-      ]
-    },
-    onClose: function(){
-      toast('Payment cancelled.');
-      document.getElementById('payBtnTxt').textContent='Pay Deposit Securely';
-      document.getElementById('payBtn').disabled=false;
-    },
-    callback: function(response){
-      toast('Payment successful! Reference: '+response.reference);
-      closePayment();
-      // Open WhatsApp with payment confirmation
-      var msg=encodeURIComponent(
-        'Hello Elizade Motors! I just paid a deposit for '+payCarName
-        +'\n\nName: '+name
-        +'\nPhone: '+phone
-        +'\nPaystack Ref: '+response.reference
-        +'\n\nPlease confirm my reservation.'
-      );
-      setTimeout(function(){
+  try{
+    var handler=PaystackPop.setup({
+      key: PAYSTACK_PUBLIC_KEY,
+      email: email,
+      amount: deposit,
+      currency: 'NGN',
+      metadata:{
+        custom_fields:[
+          {display_name:'Name',variable_name:'name',value:name},
+          {display_name:'Phone',variable_name:'phone',value:phone},
+          {display_name:'Vehicle',variable_name:'car',value:payCarName},
+        ]
+      },
+      onClose: function(){ toast('Payment window closed.'); },
+      callback: function(response){
+        var msg=encodeURIComponent(
+          'Hello Elizade Motors! I just paid a deposit.\n\n'
+          +'Vehicle: '+payCarName+'\n'
+          +'Name: '+name+'\n'
+          +'Phone: '+phone+'\n'
+          +'Reference: '+response.reference+'\n\n'
+          +'Please confirm my reservation.'
+        );
         window.open('https://wa.me/2348039432707?text='+msg,'_blank');
-        window.location.href='/payment/success/?ref='+response.reference+'&car='+encodeURIComponent(payCarName)+'&name='+encodeURIComponent(name);
-      },800);
-    }
-  });
-  handler.openIframe();
-  document.getElementById('payBtnTxt').textContent='Pay Deposit Securely';
-  document.getElementById('payBtn').disabled=false;
+        window.location.href='/payment/success/?ref='+response.reference
+          +'&car='+encodeURIComponent(payCarName)
+          +'&name='+encodeURIComponent(name);
+      }
+    });
+    handler.openIframe();
+  } catch(e){
+    toast('Payment error: '+e.message, true);
+    console.error('Paystack error:', e);
+  }
 }
 }
 </script>
