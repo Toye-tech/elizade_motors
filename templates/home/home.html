@@ -1787,11 +1787,14 @@ document.addEventListener('keydown',function(e){
 </div>
 
 <script>
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeModal();closeAdmin();closeCF();closeTF();closeConfirm();closeEnqDetail();}
+});
+
 // ============================================================
 // PAYSTACK PAYMENT
 // ============================================================
 var payCarId=null, payCarName='', payCarPrice=0;
-var PAYSTACK_PUBLIC_KEY = '{{ paystack_public_key|default:"" }}';
 
 function openPayment(carId, carName, carPrice){
   payCarId=carId; payCarName=carName; payCarPrice=carPrice;
@@ -1803,7 +1806,10 @@ function openPayment(carId, carName, carPrice){
   document.getElementById('payEmail').value='';
   document.getElementById('payOverlay').classList.add('open');
 }
-function closePayment(){ document.getElementById('payOverlay').classList.remove('open'); }
+
+function closePayment(){
+  document.getElementById('payOverlay').classList.remove('open');
+}
 
 function initiatePayment(){
   var name=document.getElementById('payName').value.trim();
@@ -1814,7 +1820,7 @@ function initiatePayment(){
   if(!phone){ toast('Please enter your phone.',true); return; }
   if(!email||!email.includes('@')){ toast('Please enter a valid email.',true); return; }
 
-  var deposit=Math.round(payCarPrice * 0.30 * 100);
+  var deposit=Math.round(payCarPrice * 0.10 * 100);
 
   try{
     var handler=PaystackPop.setup({
